@@ -1,0 +1,57 @@
+### Django ###
+# Environnement virtuel
+venv/
+.env
+
+# Fichiers de base de données
+*.sqlite3
+*.db
+*.pid
+
+# Fichiers de cache
+*.py[cod]
+__pycache__/
+
+# Fichiers de déploiement
+*.egg-info/
+dist/
+build/
+
+# Fichiers sensibles
+secrets.py
+.env.local
+*.env
+
+### Angular ###
+# Dépendances
+node_modules/
+
+# Fichiers de build
+dist/
+.tmp/
+.cache/
+
+# Environnement
+/.angular/cache
+
+# Fichiers IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+### Playwright ###
+# Fichiers de test
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+### VS Code ###
+/.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
