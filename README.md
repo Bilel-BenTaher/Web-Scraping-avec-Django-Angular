@@ -11,7 +11,7 @@ Ce projet permet de :
 ### Backend (Django)
 
 ```bash
-git clone https://github.com/votre-utilisateur/votre-repo.git
+git clone https://github.com/Bilel-BenTaher/Web-Scraping-avec-Django-Angular.git
 cd votre-repo
 python -m venv venv
 source venv/bin/activate  # ou venv\Scripts\activate sur Windows
