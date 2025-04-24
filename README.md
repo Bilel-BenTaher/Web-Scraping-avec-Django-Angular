@@ -80,7 +80,7 @@ frontend/
 
 - Django + DRF
 - Playwright (scraping JS)
-- Angular + Material
+- Angular 
 - SQLite 
 ---
 
