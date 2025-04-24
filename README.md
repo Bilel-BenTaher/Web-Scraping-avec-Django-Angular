@@ -12,7 +12,7 @@ Ce projet permet de :
 
 ```bash
 git clone https://github.com/Bilel-BenTaher/Web-Scraping-avec-Django-Angular.git
-cd votre-repo
+cd Web-Scraping-avec-Django-Angular
 python -m venv venv
 source venv/bin/activate  # ou venv\Scripts\activate sur Windows
 pip install -r requirements.txt
