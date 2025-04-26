@@ -40,7 +40,7 @@ python manage.py migrate
 ### Scraper les données
 
 ```bash
-python quotes/scraper.py
+python manage.py scrape_quotes
 ```
 
 ### Démarrer le backend
