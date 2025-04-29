@@ -104,33 +104,6 @@ ng serve
 
 - Filtres dynamiques par auteur ou tag
 - Pagination automatique
-- Design responsive (Angular Material)
-- Animations fluides et transitions
-
----
-
-## 🧱 Arborescence du projet
-
-```bash
-scraping_project/
-├── backend/
-│   ├── manage.py
-│   └── quotes/
-│       ├── models.py
-│       ├── scraper.py
-│       ├── serializers.py
-│       ├── views.py
-│       ├── urls.py
-│       └── admin.py
-├── frontend/
-│   └── src/app/
-│       ├── quotes/
-│       ├── api.service.ts
-│       └── app.component.ts
-├── requirements.txt
-├── README.md
-```
-
 ---
 
 ## 🧰 Technologies utilisées
