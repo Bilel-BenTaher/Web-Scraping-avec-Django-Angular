@@ -75,7 +75,7 @@ python manage.py scrape_quotes
 python manage.py runserver
 ```
 
-📎 Accès à l’API : [http://localhost:8000/api/quotes/](http://localhost:8000/api/quotes/)
+📎 Accès à l’API : [http://localhost:8000/api/quotes/](http://localhost:8000/quotes/)
 
 ---
 
