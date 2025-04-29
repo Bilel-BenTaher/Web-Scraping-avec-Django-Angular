@@ -8,16 +8,6 @@ Application web permettant de **scraper des citations** depuis [Quotes to Scrape
 
 ---
 
-## 📋 Prérequis
-
-Avant de commencer, assure-toi d’avoir installé :
-
-- ✅ Python 3.8 ou version supérieure  
-- ✅ Node.js 16 ou version supérieure  
-- ✅ [Playwright (Python)](https://playwright.dev/python/)  
-- ✅ PostgreSQL
-
----
 
 ## 🛠 Installation du projet
 
