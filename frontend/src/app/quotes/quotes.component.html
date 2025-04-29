@@ -1,0 +1,11 @@
+<div *ngFor="let quote of quotes">
+    <p>{{ quote.text }}</p>
+    <p>- {{ quote.author }}</p>
+    <div *ngIf="isArray(quote.tags)">
+        Tags: {{ quote.tags.join(', ') }}
+      </div>
+      <div *ngIf="!isArray(quote.tags)">
+        Tags: {{ quote.tags }}
+      </div>
+      
+  </div>
