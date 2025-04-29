@@ -1,254 +1,168 @@
-<<<<<<< HEAD
-# 📘 Projet Django + Angular - Scraping de citations
-
-Ce projet permet de :
-- Scraper des citations depuis [quotes.toscrape.com/js/](https://quotes.toscrape.com/js/)
-- Stocker les données via une API Django REST
+Voici une version **corrigée, structurée et adaptée à un débutant**, avec une meilleure hiérarchie et des clarifications supplémentaires, tout en conservant ton contenu. J’ai reformulé certains passages pour les rendre plus pédagogiques et faciles à suivre :
 
 ---
 
-## 🔧 Installation rapide
+# 📘 Projet Django + Angular – Scraping de citations
 
-### Backend (Django)
-
-```bash
-git clone https://github.com/Bilel-BenTaher/Web-Scraping-avec-Django-Angular.git
-cd Web-Scraping-avec-Django-Angular
-python -m venv venv
-source venv/bin/activate  # ou venv\Scripts\activate sur Windows
-pip install -r requirements.txt
-```
-
-### Frontend (Angular)
-=======
-Parfait ! Voici le **fichier `README.md` complet** que tu peux copier-coller **directement** dans ton projet :
-
----
-
-```markdown
-# 🕸️ Projet Web Scraping avec Django & Angular
-
-Application web permettant de **scraper des citations** depuis [Quotes to Scrape (JS)](https://quotes.toscrape.com/js/), de les **stocker via une API Django**, et de les **afficher dans une interface Angular** avec **filtres** et **pagination**.
+Application web permettant de **scraper des citations** depuis [Quotes to Scrape (JS)](https://quotes.toscrape.com/js/), de les **stocker dans une base de données via une API Django REST**, et de les **afficher dans une interface Angular** avec **filtres dynamiques** et **pagination**.
 
 ---
 
 ## 📋 Prérequis
 
-- Python 3.8+
-- Node.js 16+
-- [Playwright](https://playwright.dev/python/) (pour le scraping dynamique)
-- PostgreSQL (optionnel, SQLite par défaut)
+Avant de commencer, assure-toi d’avoir installé :
+
+- ✅ Python 3.8 ou version supérieure  
+- ✅ Node.js 16 ou version supérieure  
+- ✅ [Playwright (Python)](https://playwright.dev/python/)  
+- ✅ PostgreSQL (ou tu peux utiliser SQLite en développement)
 
 ---
 
-## 🛠 Installation
+## 🛠 Installation du projet
 
-### 1. Cloner le dépôt
+### 1. Cloner le dépôt GitHub
 
 ```bash
-git clone https://github.com/votre-utilisateur/votre-repo.git
-cd votre-repo
+git clone https://github.com/Bilel-BenTaher/Web-Scraping-avec-Django-Angular.git
+cd Web-Scraping-avec-Django-Angular
 ```
+
+---
 
 ### 2. Installer le Backend (Django)
 
 ```bash
 python -m venv venv
-source venv/bin/activate  # Linux/Mac
-venv\Scripts\activate     # Windows
+# Activation de l'environnement virtuel :
+# Pour Windows :
+venv\Scripts\activate
+# Pour macOS/Linux :
+source venv/bin/activate
 
+# Installation des dépendances Python
 pip install -r requirements.txt
-```
-
-### 3. Installer le Frontend (Angular)
->>>>>>> 3c655cf (Create README.md)
-
-```bash
-cd frontend
-npm install
 ```
 
 ---
 
-<<<<<<< HEAD
-Appliquer les migrations :
-=======
-## ⚙ Configuration
+### 3. Configurer les variables d’environnement
 
-### 🔐 Variables d'environnement
-
-Créez un fichier `.env` dans le dossier `backend/` :
+Crée un fichier `.env` dans le dossier `backend/` et ajoute :
 
 ```ini
 DEBUG=True
-SECRET_KEY=votre_secret_key
+SECRET_KEY=ta_clé_secrète
 DATABASE_URL=sqlite:///db.sqlite3
-# Pour PostgreSQL : postgres://user:password@localhost:5432/nom_de_la_base
+# Si tu utilises PostgreSQL :
+# DATABASE_URL=postgres://utilisateur:motdepasse@localhost:5432/nom_de_la_base
 ```
 
-### 🗄️ Migrations Django
->>>>>>> 3c655cf (Create README.md)
+---
+
+### 4. Appliquer les migrations
 
 ```bash
+cd backend
 python manage.py migrate
 ```
 
 ---
 
-<<<<<<< HEAD
-## 🚀 Lancement
-
-### Scraper les données
+### 5. Installer le Frontend (Angular)
 
 ```bash
-python manage.py scrape_quotes
+cd ../frontend
+npm install
 ```
 
-### Démarrer le backend
-=======
-## 🚀 Lancement du Projet
+---
+
+## 🚀 Lancer le projet
 
 ### 1. Scraper les citations
 
 ```bash
-python quotes/scraper.py
+cd ../backend
+python manage.py scrape_quotes
 ```
 
-Options utiles :
-- `--headless=false` : Lance le navigateur en mode visible
-- `--max-pages=5` : Limite le nombre de pages scrapées
+**Options disponibles :**
+- `--headless=false` : permet d'afficher le navigateur pendant le scraping
+- `--max-pages=5` : limite le nombre de pages à scraper
 
-### 2. Lancer le serveur Django
->>>>>>> 3c655cf (Create README.md)
+---
+
+### 2. Lancer le serveur Django (API)
 
 ```bash
 python manage.py runserver
 ```
 
-<<<<<<< HEAD
-### Démarrer l’interface Angular
-=======
-API accessible sur : [http://localhost:8000/api/quotes/](http://localhost:8000/api/quotes/)
+📎 Accès à l’API : [http://localhost:8000/api/quotes/](http://localhost:8000/api/quotes/)
 
-### 3. Démarrer Angular
->>>>>>> 3c655cf (Create README.md)
+---
+
+### 3. Lancer Angular (interface utilisateur)
 
 ```bash
-cd frontend
+cd ../frontend
 ng serve
 ```
 
-<<<<<<< HEAD
----
-
-## 🔗 Liens utiles
-
-- API Django : [http://localhost:8000/api/quotes/](http://localhost:8000/api/quotes/)
-- Interface Angular : [http://localhost:4200](http://localhost:4200)
+🌐 Interface Angular : [http://localhost:4200](http://localhost:4200)
 
 ---
 
-## 🧱 Structure rapide
+## 🌟 Fonctionnalités principales
 
-```
-backend/
-│   ├── quotes/ (scraper.py, models.py, views.py...)
-frontend/
-│   ├── src/app/quotes/ (composants Angular)
-=======
-Interface disponible sur : [http://localhost:4200](http://localhost:4200)
-
----
-
-## 🌟 Fonctionnalités
-
-### 📡 API REST
+### 🔗 API REST Django
 
 | Endpoint                        | Méthode | Description                    |
-|---------------------------------|---------|--------------------------------|
-| `/api/quotes/`                  | GET     | Liste paginée des citations   |
+|--------------------------------|---------|--------------------------------|
+| `/api/quotes/`                 | GET     | Liste paginée des citations   |
 | `/api/quotes/?author=...`      | GET     | Filtrer par auteur            |
 | `/api/quotes/?tag=...`         | GET     | Filtrer par tag               |
 
 ### 🖥️ Interface Angular
 
-- 🔎 Filtres dynamiques par auteur ou tag
-- 📄 Pagination automatique
-- 🎨 Design responsive (Angular Material)
-- ✨ Animations fluides
+- Filtres dynamiques par auteur ou tag
+- Pagination automatique
+- Design responsive (Angular Material)
+- Animations fluides et transitions
 
 ---
 
-## 🧱 Structure du Projet
+## 🧱 Arborescence du projet
 
-```
-.
+```bash
+scraping_project/
 ├── backend/
 │   ├── manage.py
-│   ├── quotes/
-│   │   ├── models.py
-│   │   ├── scraper.py
-│   │   ├── serializers.py
-│   │   ├── views.py
-│   │   ├── urls.py
-│   │   └── admin.py
-│   └── settings.py
+│   └── quotes/
+│       ├── models.py
+│       ├── scraper.py
+│       ├── serializers.py
+│       ├── views.py
+│       ├── urls.py
+│       └── admin.py
 ├── frontend/
-│   ├── src/
-│   │   └── app/
-│   │       ├── quotes/
-│   │       ├── api.service.ts
-│   │       └── app.component.ts
+│   └── src/app/
+│       ├── quotes/
+│       ├── api.service.ts
+│       └── app.component.ts
 ├── requirements.txt
 ├── README.md
->>>>>>> 3c655cf (Create README.md)
 ```
 
 ---
 
-<<<<<<< HEAD
-## 🛠 Stack
+## 🧰 Technologies utilisées
 
-- Django + DRF
-- Playwright (scraping JS)
-- Angular 
-- SQLite 
----
-
-=======
-## 🐛 Dépannage
-
-### Problèmes de scraping
-
-- Vérifiez que le site source n'a pas changé son HTML
-- Essayez en mode non-headless : `--headless=false`
-
-### Erreurs CORS
-
-Ajoutez ceci à `settings.py` :
-
-```python
-INSTALLED_APPS += ['corsheaders']
-MIDDLEWARE.insert(0, 'corsheaders.middleware.CorsMiddleware')
-CORS_ALLOW_ALL_ORIGINS = True  # En développement uniquement
-```
+| Couche       | Outils                          |
+|--------------|----------------------------------|
+| Backend      | Django 4, Django REST Framework, Playwright |
+| Frontend     | Angular 14, Angular Material, TypeScript   |
+| Base de données | SQLite (dev) / PostgreSQL (prod recommandé) |
 
 ---
-
-## 📚 Stack Technique
-
-- **Backend** : Django 4, Django REST Framework, Playwright
-- **Frontend** : Angular 14, Angular Material, TypeScript
-- **Base de données** : SQLite ou PostgreSQL
-
----
-
-## 📄 Licence
-
-Distribué sous licence **MIT** – voir le fichier [LICENSE](LICENSE) pour plus de détails.
-```
-
----
-
-Tu peux maintenant **copier/coller tout ce contenu** dans un fichier `README.md` à la racine de ton projet. Si tu veux que je t’aide à générer aussi le `requirements.txt`, le `.env`, ou d’autres fichiers comme `.gitignore`, fais-moi signe !
->>>>>>> 3c655cf (Create README.md)
