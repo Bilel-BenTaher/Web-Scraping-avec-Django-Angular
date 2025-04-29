@@ -96,9 +96,9 @@ ng serve
 
 | Endpoint                        | Méthode | Description                    |
 |--------------------------------|---------|--------------------------------|
-| `/api/quotes/`                 | GET     | Liste paginée des citations   |
-| `/api/quotes/?author=...`      | GET     | Filtrer par auteur            |
-| `/api/quotes/?tag=...`         | GET     | Filtrer par tag               |
+| `/quotes/`                 | GET     | Liste paginée des citations   |
+| `/quotes/?author=...`      | GET     | Filtrer par auteur            |
+| `/quotes/?tag=...`         | GET     | Filtrer par tag               |
 
 ### 🖥️ Interface Angular
 
