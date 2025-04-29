@@ -1,4 +1,4 @@
-Voici une version **corrigée, structurée et adaptée à un débutant**, avec une meilleure hiérarchie et des clarifications supplémentaires, tout en conservant ton contenu. J’ai reformulé certains passages pour les rendre plus pédagogiques et faciles à suivre :
+
 
 ---
 
