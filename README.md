@@ -36,13 +36,7 @@ pip install -r requirements.txt
 
 ---
 
-### 3. Configurer les variables d’environnement
-
-Crée un fichier `.env` dans le dossier `backend/` 
-
----
-
-### 4. Appliquer les migrations
+### 3. Appliquer les migrations
 
 ```bash
 cd backend
@@ -51,7 +45,7 @@ python manage.py migrate
 
 ---
 
-### 5. Installer le Frontend (Angular)
+### 4. Installer le Frontend (Angular)
 
 ```bash
 cd ../frontend
