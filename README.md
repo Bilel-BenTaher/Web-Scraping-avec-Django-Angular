@@ -48,15 +48,7 @@ pip install -r requirements.txt
 
 ### 3. Configurer les variables d’environnement
 
-Crée un fichier `.env` dans le dossier `backend/` et ajoute :
-
-```ini
-DEBUG=True
-SECRET_KEY=ta_clé_secrète
-DATABASE_URL=sqlite:///db.sqlite3
-# Si tu utilises PostgreSQL :
-# DATABASE_URL=postgres://utilisateur:motdepasse@localhost:5432/nom_de_la_base
-```
+Crée un fichier `.env` dans le dossier `backend/` 
 
 ---
 
