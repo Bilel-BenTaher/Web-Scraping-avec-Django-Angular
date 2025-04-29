@@ -17,7 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from scraper.views import QuoteList
+from account.views import SignUpView
+from rest_framework_simplejwt.views import TokenObtainPairView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('quotes/', QuoteList.as_view()),
+    path('signup/', SignUpView.as_view()),
+    path('token/', TokenObtainPairView.as_view()), 
 ]

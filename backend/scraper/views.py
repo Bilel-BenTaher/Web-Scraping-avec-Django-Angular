@@ -6,6 +6,7 @@ from .filters import QuoteFilter
 from rest_framework.pagination import PageNumberPagination
 
 
+
 # Create your views here.
 
 class QuoteList(generics.ListAPIView):
@@ -13,4 +14,3 @@ class QuoteList(generics.ListAPIView):
     filterset_class = QuoteFilter 
     pagination_class = PageNumberPagination
     serializer_class = QuoteSerializer
-     
