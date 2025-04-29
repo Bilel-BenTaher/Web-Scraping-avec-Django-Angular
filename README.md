@@ -155,6 +155,6 @@ scraping_project/
 |--------------|----------------------------------|
 | Backend      | Django 4, Django REST Framework, Playwright |
 | Frontend     | Angular 14, Angular Material, TypeScript   |
-| Base de données | SQLite (dev) / PostgreSQL (prod recommandé) |
+| Base de données |  PostgreSQL  |
 
 ---
