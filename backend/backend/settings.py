@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'scraper.apps.ScraperConfig',
     'django_filters',
     'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
     'account.apps.AccountConfig',
 ]
 REST_FRAMEWORK = {
@@ -62,7 +63,7 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
     'BLACKLIST_AFTER_ROTATION': True,
     'AUTH_HEADER_TYPES': ('Bearer',),
-    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken')
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',)  
 }
 
 MIDDLEWARE = [
@@ -135,13 +136,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
+LANGUAGE_CODE = 'fr' 
+TIME_ZONE = 'Africa/Tunis'
 USE_I18N = True
-
-USE_TZ = True
+USE_L10N = True
+USE_TZ = True  
 
 
 # Static files (CSS, JavaScript, Images)

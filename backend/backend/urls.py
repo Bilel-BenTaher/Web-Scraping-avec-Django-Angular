@@ -16,12 +16,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from scraper.views import QuoteList
-from account.views import SignUpView
+from scraper.views import QuoteList,QuoteDetail
+from account.views import SignUpView,UserProfileView,SignInView,SignOutView
 from rest_framework_simplejwt.views import TokenObtainPairView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('quotes/', QuoteList.as_view()),
+    path('quotes/create/', QuoteList.as_view(), name='quote-create'),
+    path('quotes/update/<int:pk>/', QuoteDetail.as_view(), name='quote-update'),
+    path('quotes/delete/<int:pk>/', QuoteDetail.as_view(), name='quotes-delete'),
     path('signup/', SignUpView.as_view()),
+    path('signin/', SignInView.as_view(), name='signin'),
+    path('signout/', SignOutView.as_view(), name='signout'),
+    path('profile/', UserProfileView.as_view()),
+    path('profile/update/', UserProfileView.as_view()),
+    path('profile/delete/', UserProfileView.as_view()),
     path('token/', TokenObtainPairView.as_view()), 
 ]

@@ -5,3 +5,4 @@ class QuoteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Quote
         fields = '__all__'
+        read_only_fields = ['user','created_at','updated_at']
