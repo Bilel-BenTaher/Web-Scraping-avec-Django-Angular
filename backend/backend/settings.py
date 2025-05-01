@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'corsheaders',
     'scraper.apps.ScraperConfig',
     'django_filters',
@@ -55,6 +56,7 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 5 , # Nombre d'items par page
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ),
 }
 
@@ -76,6 +78,14 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
+EMAIL_HOST_USER = '31e09fc98dc5ca'
+EMAIL_HOST_PASSWORD = '16238c4234595a'
+EMAIL_PORT = '2525'
+EMAIL_USE_TLS = True    
+EMAIL_USE_SSL = False
 
 
 ROOT_URLCONF = 'backend.urls'

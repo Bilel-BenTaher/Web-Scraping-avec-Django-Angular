@@ -1,7 +1,15 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
-from django.contrib.auth import authenticate,get_user_model
+from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth.hashers import make_password
+from django.utils.crypto import get_random_string
+from django.core.mail import send_mail
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from datetime import datetime, timedelta
+from django.utils import timezone
 from .serializers import SignUpSerializer,UserProfileSerializer,SignInSerializer
 
 User = get_user_model()
@@ -158,3 +166,74 @@ class UserProfileView(generics.RetrieveUpdateDestroyAPIView):
         return Response({
             'message': 'Compte supprimé avec succès'
         }, status=status.HTTP_204_NO_CONTENT)
+    
+class ForgotPasswordView(APIView):
+    def post(self, request):
+        data = request.data
+        
+        # Vérifier si l'email est fourni
+        if 'email' not in data:
+            return Response({'error': 'Email est requis'}, status=status.HTTP_400_BAD_REQUEST)
+            
+        # Trouver l'utilisateur avec cet email
+        try:
+            user = User.objects.get(email=data['email'])
+        except User.DoesNotExist:
+            return Response({'error': 'Aucun utilisateur trouvé avec cet email'}, status=status.HTTP_404_NOT_FOUND)
+        
+        # Générer un token et définir sa date d'expiration
+        token = get_random_string(40)
+        expire_date = datetime.now() + timedelta(minutes=15)
+        
+        # Mettre à jour le profil de l'utilisateur
+        user.profile.reset_password_token = token
+        user.profile.reset_password_expire = expire_date
+        user.profile.save()
+        
+        # Envoyer l'email avec le lien de réinitialisation
+        link = f"http://localhost:8000/reset_password/{token}/"
+        body = f"Votre lien de réinitialisation de mot de passe est : {link}"
+        
+        send_mail(
+            "Réinitialisation de mot de passe",
+            body,
+            "votre_email@example.com",
+            [data['email']]
+        )
+        
+        return Response({'details': f'Email de réinitialisation envoyé à {data["email"]}'})
+
+class ResetPasswordView(APIView):
+    def post(self, request, token):
+        data = request.data
+        
+        # Vérifier si les champs requis sont présents
+        if 'password' not in data or 'confirmPassword' not in data:
+            return Response({'error': 'Les champs mot de passe sont requis'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Vérifier si les mots de passe correspondent
+        if data['password'] != data['confirmPassword']:
+            return Response({'error': 'Les mots de passe ne correspondent pas'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Trouver l'utilisateur avec ce token
+        try:
+            user = User.objects.get(profile__reset_password_token=token)
+        except User.DoesNotExist:
+            return Response({'error': 'Token invalide'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Vérifier si le token n'est pas expiré
+        if user.profile.reset_password_expire < timezone.now():
+            return Response({'error': 'Token expiré'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Mettre à jour le mot de passe
+        user.password = make_password(data['password'])
+        
+        # Effacer le token et sa date d'expiration
+        user.profile.reset_password_token = ""
+        user.profile.reset_password_expire = None
+        
+        # Sauvegarder les modifications
+        user.profile.save()
+        user.save()
+        
+        return Response({'details': 'Mot de passe réinitialisé avec succès'})
