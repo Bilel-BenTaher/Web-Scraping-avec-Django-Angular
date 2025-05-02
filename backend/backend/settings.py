@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-30qja07-5)00ha)5-#1kh4ces6!a0g2r%aowlq#rifqj3+h!9u' #config('SECRET_KEY')
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken',
     'corsheaders',
     'scraper.apps.ScraperConfig',
     'django_filters',
@@ -56,7 +55,6 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 5 , # Nombre d'items par page
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-        'rest_framework.authentication.TokenAuthentication',
     ),
 }
 
@@ -80,12 +78,13 @@ MIDDLEWARE = [
 ]
 
 
-EMAIL_HOST = 'sandbox.smtp.mailtrap.io'
-EMAIL_HOST_USER = '31e09fc98dc5ca'
-EMAIL_HOST_PASSWORD = '16238c4234595a'
-EMAIL_PORT = '2525'
-EMAIL_USE_TLS = True    
-EMAIL_USE_SSL = False
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+EMAIL_USE_SSL = config('EMAIL_USE_SSL', cast=bool)
+
 
 
 ROOT_URLCONF = 'backend.urls'
@@ -115,11 +114,11 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'quotesdb', #config('DB_NAME')  
-        'USER': 'postgres', #config('DB_USER')
-        'PASSWORD':'DJANGOtest25', #config('DB_PASSWORD')
-        'HOST':'localhost', #config('DB_HOST')
-        'PORT':'5432', #config('DB_PORT')
+        'NAME': config('DB_NAME') , 
+        'USER': config('DB_USER'),
+        'PASSWORD':config('DB_PASSWORD'),
+        'HOST':config('DB_HOST'),
+        'PORT':config('DB_PORT'),
     }
 }
 
