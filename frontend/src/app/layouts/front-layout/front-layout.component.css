@@ -1,0 +1,10 @@
+.navbar {
+    padding: 0.8rem 0;
+  }
+  .navbar-brand {
+    font-size: 1.5rem;
+  }
+  footer a:hover {
+    color: #0d6efd !important;
+    transition: 0.3s;
+  }

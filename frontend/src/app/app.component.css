@@ -1,0 +1,94 @@
+/* Style de base pour le corps de la page */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: var(--bs-body-font-family);
+  }
+  
+  /* Conteneur principal pour garantir que l'application occupe toute la hauteur */
+  .app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+  }
+  
+  /* Contenu principal qui prend tout l'espace disponible */
+  .main-content {
+    flex: 1 0 auto;
+    width: 100%;
+    padding-bottom: 1rem; /* Espace entre le contenu et le footer */
+  }
+  
+  /* Style du footer */
+  footer {
+    margin-top: auto; /* Force le footer en bas */
+    width: 100%;
+    flex-shrink: 0; /* Empêche le footer de rétrécir */
+  }
+  
+  /* Amélioration de la visibilité du texte grisé dans le footer sombre */
+  footer .text-muted {
+    color: rgba(255, 255, 255, 0.7) !important; /* Plus visible sur fond sombre */
+  }
+  
+  /* Styles pour les liens du footer */
+  footer a.text-white {
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+  
+  footer a.text-white:hover {
+    color: #0d6efd !important; /* Couleur primaire de Bootstrap */
+    text-decoration: underline !important;
+  }
+  
+  /* Styles pour les icônes sociales */
+  footer .mt-3 a {
+    display: inline-block;
+    font-size: 1.2rem;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin-right: 0.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  footer .mt-3 a:hover {
+    color: #ffffff !important;
+    background-color: #0d6efd;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Style pour le bouton de newsletter */
+  footer .btn-primary {
+    transition: all 0.3s ease;
+  }
+  
+  footer .btn-primary:hover {
+    transform: translateX(3px);
+  }
+  
+  /* Styles pour les titres du footer */
+  footer h5.fw-bold {
+    border-bottom: 2px solid #0d6efd;
+    padding-bottom: 0.5rem;
+    display: inline-block;
+  }
+  
+  /* Style pour la ligne de séparation */
+  footer hr.my-4 {
+    opacity: 0.2;
+    border-color: #ffffff;
+  }
