@@ -1,0 +1,50 @@
+.about-page {
+    .bg-gradient-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+  
+    .team-card {
+      background: white;
+      border-radius: 12px;
+      transition: all 0.4s ease;
+      border: 1px solid rgba(0,0,0,0.05);
+      
+      &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+      }
+    }
+  
+    .avatar img {
+      object-fit: cover;
+      border: 3px solid #667eea;
+      transition: all 0.3s ease;
+    }
+  
+    .btn-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+  
+      &:hover {
+        background: #667eea !important;
+        color: white !important;
+        transform: scale(1.1);
+      }
+    }
+  
+    .py-6 {
+      padding-top: 5rem;
+      padding-bottom: 5rem;
+    }
+  
+    .mb-6 {
+      margin-bottom: 5rem;
+    }
+   
+  }
+  

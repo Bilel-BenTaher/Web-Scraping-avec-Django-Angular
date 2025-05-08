@@ -1,1 +1,78 @@
-<p>about works!</p>
+<div class="about-page"> 
+    <!-- Hero Section with animation -->
+    <section class="about-hero bg-gradient-primary text-white py-6">
+      <div class="container text-center py-5">
+        <h1 class="display-3 fw-bold mb-4 animate__animated animate__fadeIn">
+          <i class="fas fa-heart text-white me-3"></i>The Soul Behind QuotesHub
+        </h1>
+        <p class="lead fs-2 animate__animated animate__fadeIn animate__delay-1s">
+          Passionate individuals dedicated to the art of words
+        </p>
+      </div>
+    </section>
+  
+    <!-- Our Story Section -->
+    <section class="py-6 bg-white">
+      <div class="container">
+        <div class="row align-items-center g-5">
+          <div class="col-lg-6">
+            <div class="pe-lg-5">
+              <span class="badge bg-primary mb-3">OUR STORY</span>
+              <h2 class="fw-bold mb-4">From Idea to Collective Inspiration</h2>
+              <p class="lead text-muted">
+                Founded in 2023, QuotesHub was born from a simple passion for beautiful quotes and their transformative power.
+              </p>
+              <div class="d-flex align-items-center mt-5">
+                <div class="flex-shrink-0">
+                  <img src="https://randomuser.me/api/portraits/women/65.jpg" 
+                       class="rounded-circle shadow" width="80" alt="Founder">
+                </div>
+                <div class="flex-grow-1 ms-4">
+                  <p class="mb-1 fw-bold">"Words are windows to the soul"</p>
+                  <small class="text-muted">Camille L., Founder</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                 class="img-fluid rounded-4 shadow-lg" alt="Team in meeting">
+          </div>
+        </div>
+      </div>
+    </section>
+  
+    <!-- Team Section -->
+    <section class="py-6 bg-light">
+      <div class="container">
+        <div class="text-center mb-6">
+          <span class="badge bg-primary mb-3">OUR TEAM</span>
+          <h2 class="fw-bold">Meet Our Creative Minds</h2>
+        </div>
+  
+        <div class="row g-4">
+          <div class="col-md-4" *ngFor="let member of team">
+            <div class="team-card text-center p-4 h-100">
+              <div class="avatar mx-auto mb-4">
+                <img [src]="member.photo" 
+                     class="rounded-circle shadow" 
+                     width="120" 
+                     alt="Team member">
+              </div>
+              <h4 class="fw-bold mb-2">{{ member.name }}</h4>
+              <p class="text-primary mb-3">{{ member.role }}</p>
+              <p class="text-muted mb-4">{{ member.bio }}</p>
+              <div class="social-links">
+                <a *ngFor="let link of member.social" 
+                   [href]="link.url" 
+                   class="btn btn-sm btn-outline-primary btn-icon mx-1">
+                  <i [class]="link.icon"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  
