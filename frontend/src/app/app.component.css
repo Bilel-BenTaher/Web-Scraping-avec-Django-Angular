@@ -1,17 +1,4 @@
-/* Style de base pour le corps de la page */
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  
-  body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    font-family: var(--bs-body-font-family);
-  }
-  
+
   /* Conteneur principal pour garantir que l'application occupe toute la hauteur */
   .app-container {
     display: flex;
@@ -27,13 +14,7 @@ html, body {
     padding-bottom: 1rem; /* Espace entre le contenu et le footer */
   }
   
-  /* Style du footer */
-  footer {
-    margin-top: auto; /* Force le footer en bas */
-    width: 100%;
-    flex-shrink: 0; /* Empêche le footer de rétrécir */
-  }
-  
+
   /* Amélioration de la visibilité du texte grisé dans le footer sombre */
   footer .text-muted {
     color: rgba(255, 255, 255, 0.7) !important; /* Plus visible sur fond sombre */

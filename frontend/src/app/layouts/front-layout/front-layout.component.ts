@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component,HostListener, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-front-layout',
@@ -6,10 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./front-layout.component.css']
 })
 export class FrontLayoutComponent implements OnInit {
+  isTransparent = false;
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
+  ngOnInit(): void {this.checkScroll(); }
+  @HostListener('window:scroll', [])
+  checkScroll(): void {
+    if (window.scrollY > 50) {
+      this.isTransparent = true;
+    } else {
+      this.isTransparent = false;
+    }
   }
 
 }

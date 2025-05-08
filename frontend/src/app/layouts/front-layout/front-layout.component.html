@@ -1,32 +1,49 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+<!-- HTML Component -->
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm" [ngClass]="{'navbar-transparent': isTransparent}">
   <div class="container">
-    <a class="navbar-brand fw-bold" href="#">
+    <!-- Brand -->
+    <a class="navbar-brand" routerLink="">
       <i class="fas fa-quote-left me-2"></i>QuotesHub
     </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    
+    <!-- Toggle Button -->
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" 
+            data-bs-target="#navbarNav" aria-controls="navbarNav" 
+            aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+    
+    <!-- Navigation Links -->
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto align-items-center"> <!-- Ajout de align-items-center -->
+      <ul class="navbar-nav ms-auto align-items-center">
         <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fas fa-home me-1"></i> Accueil</a>
+          <a class="nav-link" routerLink="" aria-label="Home">
+            <i class="fas fa-home me-1"></i>Home
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fas fa-info-circle me-1"></i> À propos</a>
+          <a class="nav-link" routerLink="/about" aria-label="About">
+            <i class="fas fa-info-circle me-1"></i>About
+          </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#"><i class="fas fa-envelope me-1"></i> Contact</a>
+          <a class="nav-link" routerLink="/contact" aria-label="Contact">
+            <i class="fas fa-envelope me-1"></i>Contact
+          </a>
         </li>
         <li class="nav-item ms-lg-3">
-          <a class="btn btn-outline-light btn-sm py-1" href="#"><i class="fas fa-user-plus me-1"></i> S'inscrire</a>
+          <a class="btn btn-outline-light btn-sm" routerLink="/sign-in" aria-label="Sign Up">
+            <i class="fas fa-user-plus me-1"></i>Sign Up
+          </a>
         </li>
         <li class="nav-item ms-lg-2">
-          <a class="btn btn-primary btn-sm py-1" href="#"><i class="fas fa-sign-in-alt me-1"></i> Se connecter</a>
+          <a class="btn btn-primary btn-sm" routerLink="/login" aria-label="Log In">
+            <i class="fas fa-sign-in-alt me-1"></i>Log In
+          </a>
         </li>
       </ul>
     </div>
   </div>
 </nav>
 
-
-  
+<router-outlet></router-outlet>

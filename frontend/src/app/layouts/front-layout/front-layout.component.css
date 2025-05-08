@@ -1,10 +1,57 @@
+
 .navbar {
-    padding: 0.8rem 0;
-  }
-  .navbar-brand {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1020;
+  transition: all 0.3s ease;
+  background-color: var(--bs-dark, #212529);
+  
+  &-brand {
     font-size: 1.5rem;
+    font-weight: 700;
+    transition: color 0.2s ease;
+    
+    &:hover {
+      color: var(--bs-primary, #0d6efd);
+    }
   }
-  footer a:hover {
-    color: #0d6efd !important;
-    transition: 0.3s;
+  
+  .nav-link {
+    position: relative;
+    transition: color 0.2s ease;
+    
+    &:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--bs-primary, #0d6efd);
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+    
+    &:hover:after {
+      width: 100%;
+    }
   }
+  
+  .btn {
+    transition: all 0.2s ease;
+    
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+}
+
+.navbar-transparent {
+  background-color: rgba(33, 37, 41, 0.7) !important;
+  backdrop-filter: blur(8px);
+  
+  &:hover {
+    background-color: rgba(33, 37, 41, 0.9) !important;
+  }
+}
