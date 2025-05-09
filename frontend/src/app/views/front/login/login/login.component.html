@@ -1,1 +1,65 @@
-<p>login works!</p>
+<div class="login-page">
+  <div class="container">
+    <div class="row justify-content-center align-items-center min-vh-100">
+      <div class="col-md-8 col-lg-6 col-xl-5">
+        <div class="card login-card shadow-lg position-relative">
+          <div class="card-body p-5">
+            <div class="text-center mb-5">
+              <i class="fas fa-quote-left text-primary fa-3x mb-3" aria-hidden="true"></i>
+              <h2 class="fw-bold">QuotesHub</h2>
+              <p class="text-muted">Log in to your world of inspiration</p>
+            </div>
+
+            <form>
+              <div class="mb-4">
+                <label for="email" class="form-label">Email</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-end-0">
+                    <i class="fas fa-envelope text-muted" aria-hidden="true"></i>
+                  </span>
+                  <input type="email" id="email" class="form-control border-start-0 py-3" placeholder="your@email.com" required>
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label for="password" class="form-label">Password</label>
+                <div class="input-group">
+                  <span class="input-group-text bg-light border-end-0">
+                    <i class="fas fa-lock text-muted" aria-hidden="true"></i>
+                  </span>
+                  <input type="password" id="password" class="form-control border-start-0 py-3" placeholder="••••••••" required>
+                  <button class="btn btn-outline-secondary toggle-password" type="button" aria-label="Toggle password visibility">
+                    <i class="fas fa-eye"></i>
+                  </button>
+                </div>
+              </div>
+
+              <div class="d-flex justify-content-between mb-4">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="remember">
+                  <label class="form-check-label" for="remember">Remember me</label>
+                </div>
+                <a href="#" class="text-decoration-none">Forgot password?</a>
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100 py-3 mb-3 fw-bold">
+                <i class="fas fa-sign-in-alt me-2"></i> Log In
+              </button>
+
+              <div class="divider my-4 position-relative text-center">
+                <span class="bg-white px-3 text-muted">OR</span>
+              </div>
+
+              <div class="text-center">
+                <p class="mb-0">New to QuotesHub?
+                  <a href="/sign-up" class="text-decoration-none fw-bold">Create an account</a>
+                </p>
+              </div>
+            </form>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

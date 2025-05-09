@@ -1,93 +1,100 @@
 <div class="contact-page bg-light">
-    <!-- Hero Section -->
-    <section class="contact-hero bg-dark text-white py-5">
-      <div class="container text-center py-4">
-        <h1 class="display-4 fw-bold mb-3">
-          <i class="fas fa-envelope-open-text me-2"></i> Contact Us
-        </h1>
-        <p class="lead">A question? A suggestion? We love hearing from you.</p>
-      </div>
-    </section>
-  
-    <!-- Form + Info -->
-    <section class="contact-main py-5">
-      <div class="container">
-        <div class="row g-5">
-          <!-- Form -->
-          <div class="col-lg-7">
-            <div class="card border-0 shadow-lg hover-scale">
-              <div class="card-body p-5">
-                <h3 class="mb-4 fw-bold"><i class="fas fa-paper-plane me-2 text-primary"></i> Send a Message</h3>
-  
-                <form>
-                  <div class="mb-4">
-                    <label class="form-label">Your Name</label>
-                    <input type="text" class="form-control form-control-lg" placeholder="John Smith">
-                  </div>
-  
-                  <div class="mb-4">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-control form-control-lg" placeholder="john@example.com">
-                  </div>
-  
-                  <div class="mb-4">
-                    <label class="form-label">Message</label>
-                    <textarea class="form-control form-control-lg" rows="5" placeholder="Your message..."></textarea>
-                  </div>
-  
-                  <button type="submit" class="btn btn-primary btn-lg w-100 py-2">
-                    <i class="fas fa-paper-plane me-2"></i> Send
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-  
-          <!-- Contact Info -->
-          <div class="col-lg-5">
-            <div class="contact-info ps-lg-4">
-              <h3 class="mb-4 fw-bold"><i class="fas fa-map-marker-alt me-2 text-primary"></i> Our Contact Info</h3>
-  
-              <div class="d-flex mb-4">
-                <i class="fas fa-map-marker-alt text-primary mt-1 me-3 fs-5"></i>
-                <div>
-                  <h5 class="fw-bold">Address</h5>
-                  <p class="text-muted mb-0">123 Quotes Street, Tunisia </p>
+
+  <!-- Hero Section -->
+  <section class="contact-hero text-white py-5">
+    <div class="container text-center py-4">
+      <h1 class="display-4 fw-bold mb-3">
+        <i class="fas fa-envelope-open-text me-2"></i> Contact Us
+      </h1>
+      <p class="lead">A question? A suggestion? We love hearing from you.</p>
+    </div>
+  </section>
+
+  <!-- Contact Form & Info -->
+  <section class="contact-main py-5">
+    <div class="container">
+      <div class="row g-5">
+
+        <!-- Contact Form -->
+        <div class="col-lg-7">
+          <div class="card border-0 shadow-lg hover-scale">
+            <div class="card-body p-5">
+              <h3 class="fw-bold mb-4">
+                <i class="fas fa-paper-plane me-2 text-primary"></i> Send a Message
+              </h3>
+
+              <form>
+                <div class="mb-4">
+                  <label for="name" class="form-label">Your Name</label>
+                  <input id="name" type="text" class="form-control form-control-lg" placeholder="John Smith">
                 </div>
-              </div>
-  
-              <div class="d-flex mb-4">
-                <i class="fas fa-envelope text-primary mt-1 me-3 fs-5"></i>
-                <div>
-                  <h5 class="fw-bold">Email</h5>
-                  <p class="text-muted mb-0">contact&#64;quoteshub.com</p>
+
+                <div class="mb-4">
+                  <label for="email" class="form-label">Email</label>
+                  <input id="email" type="email" class="form-control form-control-lg" placeholder="john@example.com">
                 </div>
-              </div>
-  
-              <div class="d-flex mb-4">
-                <i class="fas fa-phone-alt text-primary mt-1 me-3 fs-5"></i>
-                <div>
-                  <h5 class="fw-bold">Phone</h5>
-                  <p class="text-muted mb-0">+216 12 345 678</p>
+
+                <div class="mb-4">
+                  <label for="message" class="form-label">Message</label>
+                  <textarea id="message" class="form-control form-control-lg" rows="5" placeholder="Your message..."></textarea>
                 </div>
-              </div>
-  
-              <div class="social-links mt-5">
-                <h5 class="fw-bold mb-3">Follow Us</h5>
-                <a href="#" class="btn btn-outline-primary btn-icon me-2">
-                  <i class="fab fa-twitter"></i>
-                </a>
-                <a href="#" class="btn btn-outline-primary btn-icon me-2">
-                  <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="#" class="btn btn-outline-primary btn-icon me-2">
-                  <i class="fab fa-linkedin-in"></i>
-                </a>
-              </div>
+
+                <button type="submit" class="btn btn-primary btn-lg w-100">
+                  <i class="fas fa-paper-plane me-2"></i> Send
+                </button>
+              </form>
             </div>
           </div>
         </div>
+
+        <!-- Contact Information -->
+        <div class="col-lg-5">
+          <div class="contact-info ps-lg-4">
+            <h3 class="fw-bold mb-4">
+              <i class="fas fa-map-marker-alt me-2 text-primary"></i> Our Contact Info
+            </h3>
+
+            <div class="d-flex mb-4">
+              <i class="fas fa-map-marker-alt text-primary fs-5 me-3 mt-1"></i>
+              <div>
+                <h5 class="fw-bold">Address</h5>
+                <p class="text-muted mb-0">123 Quotes Street, Tunisia</p>
+              </div>
+            </div>
+
+            <div class="d-flex mb-4">
+              <i class="fas fa-envelope text-primary fs-5 me-3 mt-1"></i>
+              <div>
+                <h5 class="fw-bold">Email</h5>
+                <p class="text-muted mb-0">contact&#64;quoteshub.com</p>
+              </div>
+            </div>
+
+            <div class="d-flex mb-4">
+              <i class="fas fa-phone-alt text-primary fs-5 me-3 mt-1"></i>
+              <div>
+                <h5 class="fw-bold">Phone</h5>
+                <p class="text-muted mb-0">+216 12 345 678</p>
+              </div>
+            </div>
+
+            <div class="mt-5">
+              <h5 class="fw-bold mb-3">Follow Us</h5>
+              <a href="#" class="btn btn-outline-primary btn-icon me-2">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="btn btn-outline-primary btn-icon me-2">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="btn btn-outline-primary btn-icon me-2">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+
+          </div>
+        </div>
+
       </div>
-    </section>
-  </div>
-  
+    </div>
+  </section>
+</div>

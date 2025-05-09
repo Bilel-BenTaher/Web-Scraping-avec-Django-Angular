@@ -7,11 +7,11 @@ const routes: Routes = [
   { 
     path: '',component: FrontLayoutComponent,
     children: [
-      {path: '', loadChildren: () => import('./views/front/home/home.module').then(m => m.HomeModule)},
+      {path: 'home', loadChildren: () => import('./views/front/home/home.module').then(m => m.HomeModule)},
       {path: 'contact', loadChildren: () => import('./views/front/contact/contact.module').then(m => m.ContactModule)},
       {path: 'about', loadChildren: () => import('./views/front/about/about.module').then(m => m.AboutModule)},
       {path: 'login', loadChildren: () => import('./views/front/login/login.module').then(m => m.LoginModule)},
-      {path: 'sign-in', loadChildren: () => import('./views/front/sign-in/sign-in.module').then(m => m.SignInModule)},
+      {path: 'sign-up', loadChildren: () => import('./views/front/sign-in/sign-in.module').then(m => m.SignInModule)},
     ]
   },
   { 
