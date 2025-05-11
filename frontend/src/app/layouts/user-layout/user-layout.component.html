@@ -1,1 +1,155 @@
-<p>user-layout works!</p>
+<!-- navbar-user.component.html -->
+<nav class="navbar navbar-expand-lg navbar-dark shadow-sm" [ngClass]="{'navbar-transparent': isTransparent}">
+  <div class="container">
+    <!-- Brand -->
+    <a class="navbar-brand fw-bold d-flex align-items-center" routerLink="/user">
+      <i class="fas fa-quote-left text-primary me-2"></i>
+      <span>QuotesHub</span>
+    </a>
+    
+    <!-- Toggle Button -->
+    <button class="navbar-toggler border-0" type="button" (click)="toggleMenu()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <!-- Navigation Links -->
+    <div class="collapse navbar-collapse" [class.show]="!isMenuCollapsed">
+      <ul class="navbar-nav ms-auto align-items-center">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="home" routerLinkActive="active" ariaCurrentWhenActive="page">
+            <i class="fas fa-home me-1"></i>Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="quotes" routerLinkActive="active" ariaCurrentWhenActive="page">
+            <i class="fas fa-quote-right me-1"></i>All Quotes
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="add" routerLinkActive="active" ariaCurrentWhenActive="page">
+            <i class="fas fa-plus-circle me-1"></i>Add a Quote
+          </a>
+        </li>
+        
+        <!-- User Menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="javascript:void(0)" 
+             id="userDropdown" role="button" (click)="toggleUserDropdown($event)" 
+             aria-expanded="false">
+             <span>Settings</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" [class.show]="isUserDropdownOpen" aria-labelledby="userDropdown">
+            <li>
+              <a class="dropdown-item" routerLink="profile">
+                <i class="fas fa-user-circle me-2"></i>Profile
+              </a>
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="logout()">
+                <i class="fas fa-sign-out-alt me-2"></i>Logout
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="page-container">
+  <!-- Elegant Sidebar -->
+  <aside class="sidebar">
+
+    <div class="sidebar-footer">
+      <div class="nav-link">
+        <span>Sophie Proverb</span>
+      </div>
+    </div>
+
+    <div class="user-profile"></div>
+
+    <nav class="sidebar-nav">
+      <ul>
+
+        <li class="nav-item">
+          <a routerLink="home" class="nav-link" routerLinkActive="active" ariaCurrentWhenActive="page">
+            <i class="fas fa-home nav-icon"></i>
+            <span class="nav-text">Home</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="quotes" class="nav-link" routerLinkActive="active" ariaCurrentWhenActive="page">
+            <i class="fas fa-quote-left nav-icon"></i>
+            <span class="nav-text">All Quotes</span>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="add" class="nav-link" routerLinkActive="active" ariaCurrentWhenActive="page">
+            <i class="fas fa-plus-circle nav-icon"></i>
+            <span class="nav-text">Add a Quote</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="sidebar-footer">
+      <a routerLink="logout" class="nav-link">
+        <i class="fas fa-sign-out-alt me-2"></i>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+
+  <div class="content-wrapper">
+    <main class="main-content">
+      <router-outlet></router-outlet> <!-- Contenu des pages dynamiques -->
+    </main>
+  </div>
+</div>
+
+<footer class="bg-dark text-white pt-4 pb-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 mb-4 mb-md-0">
+        <h5 class="fw-bold mb-3"><i class="fas fa-quote-left text-primary me-2"></i>QuotesHub</h5>
+        <p class="text-muted">
+          Discover inspirational quotes, add your own, and share them with the world.
+        </p>
+      </div>
+      <div class="col-md-2 mb-4 mb-md-0">
+        <h5 class="fw-bold mb-3">Quick Links</h5>
+        <ul class="list-unstyled">
+          <li><a routerLink="home" class="text-white text-decoration-none">Home</a></li>
+          <li><a routerLink="quotes" class="text-white text-decoration-none">Quotes</a></li>
+          <li><a routerLink="add" class="text-white text-decoration-none">Add</a></li>
+        </ul>
+      </div>
+      <div class="col-md-2 mb-4 mb-md-0">
+        <h5 class="fw-bold mb-3">Account</h5>
+        <ul class="list-unstyled">
+          <li><a routerLink="profile" class="text-white text-decoration-none">Profile</a></li>
+          <li><a routerLink="" class="text-white text-decoration-none">Logout</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h5 class="fw-bold mb-3">Newsletter</h5>
+        <form>
+          <div class="input-group mb-3">
+            <input type="email" class="form-control" placeholder="Your Email">
+            <button class="btn btn-primary" type="submit"><i class="fas fa-paper-plane"></i></button>
+          </div>
+        </form>
+        <div class="mt-3">
+          <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="text-white me-3"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+    </div>
+    <hr class="my-4">
+    <div class="text-center">
+      <p class="mb-0">&copy; 2024 QuotesHub. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
