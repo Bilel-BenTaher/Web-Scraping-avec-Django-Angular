@@ -241,6 +241,66 @@
 .logout-btn:hover {
   color: var(--secondary-color);
 }
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* Style pour les tags cliquables */
+.quote-tag {
+  background-color: #e9ecef !important;
+  color: #037e18b0 !important;
+  transition: all 0.2s ease;
+}
+.quote-author{background-color: #e9ecef !important;
+  color: #0f118db9 !important;
+  transition: all 0.2s ease;}
+
+
+.quote-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.quote-actions {
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    padding-top: 1rem;
+}
+
+.btn-edit, .btn-delete {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-edit {
+    background: rgba(9, 197, 134, 0.267);
+    color: var(--accent-color);
+}
+
+.btn-edit:hover {
+    background: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.btn-delete {
+    background: rgba(231, 7, 119, 0.26);
+    color: var(--secondary-color);
+}
+
+.btn-delete:hover {
+    background: var(--secondary-color);
+   
+    transform: translateY(-2px);
+}
 
 @media (max-width: 992px) {
   .sidebar {

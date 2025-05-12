@@ -1,5 +1,4 @@
 <div class="quotes-management-container">
-
   <!-- Main Content -->
   <main class="main-content">
     <header class="content-header">
@@ -13,151 +12,63 @@
         <h2 class="section-title">Add a new quote</h2>
       </div>
       
-      <form class="quote-form">
+      <!-- Messages d'alerte -->
+      <div *ngIf="successMessage" class="alert alert-success">
+        {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="alert alert-danger">
+        {{ errorMessage }}
+      </div>
+      
+      <form [formGroup]="quoteForm" (ngSubmit)="onSubmit()" class="quote-form">
         <div class="form-group">
           <label for="quote-text">Quote</label>
-          <textarea id="quote-text" class="form-input" rows="3" placeholder="Write your quote here..."></textarea>
+          <textarea 
+            id="quote-text" 
+            formControlName="text"
+            class="form-input" 
+            rows="3" 
+            placeholder="Write your quote here..."></textarea>
+          <div *ngIf="text?.invalid && (text?.dirty || text?.touched)" class="error-message">
+            <span *ngIf="text?.errors?.['required']">Quote text is required.</span>
+            <span *ngIf="text?.errors?.['minlength']">Quote must be at least 5 characters long.</span>
+          </div>
         </div>
         
         <div class="form-group">
           <label for="quote-author">Author</label>
-          <input type="text" id="quote-author" class="form-input" placeholder="Author's name">
+          <input 
+            type="text" 
+            id="quote-author" 
+            formControlName="author"
+            class="form-input" 
+            placeholder="Author's name">
+          <div *ngIf="author?.invalid && (author?.dirty || author?.touched)" class="error-message">
+            <span *ngIf="author?.errors?.['required']">Author name is required.</span>
+          </div>
         </div>
         
         <div class="form-group">
-          <label for="quote-category">Category</label>
-          <input type="text" id="quote-category" class="form-input" placeholder="Add category">
+          <label for="quote-category">Tags</label>
+          <input 
+            type="text" 
+            id="quote-category" 
+            formControlName="tags"
+            class="form-input" 
+            placeholder="Add category">
         </div>
         
         <div class="form-actions">
-          <button type="reset" class="btn btn-danger">
+          <button type="button" (click)="resetForm()" class="btn btn-danger">
             <i class="fas fa-times"></i> Cancel
           </button>
-          <button type="submit" class="btn btn-success">
-            <i class="fas fa-plus"></i> Add Quote
+          <button 
+            type="submit" 
+            [disabled]="quoteForm.invalid || isSubmitting" 
+            class="btn btn-success">
+            <i class="fas fa-plus"></i> {{ isSubmitting ? 'Adding...' : 'Add Quote' }}
           </button>
         </div>
       </form>
     </section>
-
-    <!-- Quote List -->
-    <section class="my-quotes-section">
-      <div class="section-header">
-        <h2 class="section-title">My Quotes</h2>
-        <div class="search-box">
-          <i class="fas fa-search"></i>
-          <input type="text" placeholder="Search for a quote...">
-        </div>
-      </div>
-      
-      <div class="quotes-list">
-        <!-- Quote 1 -->
-        <div class="quote-item">
-          <div class="quote-content">
-            <p class="quote-text">"Simplicity is the ultimate sophistication."</p>
-            <p class="quote-author">- Leonardo da Vinci</p>
-          </div>
-          <div class="quote-meta">
-            <span class="quote-category">Art</span>
-            <span class="quote-date">Added on 06/15/2023</span>
-          </div>
-          <div class="quote-actions">
-            <button class="btn-edit">
-              <i class="fas fa-edit"></i> Edit
-            </button>
-            <button class="btn-delete">
-              <i class="fas fa-trash-alt"></i> Delete
-            </button>
-          </div>
-        </div>
-
-        <!-- Quote 2 -->
-        <div class="quote-item">
-          <div class="quote-content">
-            <p class="quote-text">"The only real risk is not taking any risk at all."</p>
-            <p class="quote-author">- Serge Gainsbourg</p>
-          </div>
-          <div class="quote-meta">
-            <span class="quote-category">Inspiration</span>
-            <span class="quote-date">Added on 06/10/2023</span>
-          </div>
-          <div class="quote-actions">
-            <button class="btn-edit">
-              <i class="fas fa-edit"></i> Edit
-            </button>
-            <button class="btn-delete">
-              <i class="fas fa-trash-alt"></i> Delete
-            </button>
-          </div>
-        </div>
-
-        <!-- Quote 3 -->
-        <div class="quote-item">
-          <div class="quote-content">
-            <p class="quote-text">"Life is what happens when you're busy making other plans."</p>
-            <p class="quote-author">- John Lennon</p>
-          </div>
-          <div class="quote-meta">
-            <span class="quote-category">Philosophy</span>
-            <span class="quote-date">Added on 06/05/2023</span>
-          </div>
-          <div class="quote-actions">
-            <button class="btn-edit">
-              <i class="fas fa-edit"></i> Edit
-            </button>
-            <button class="btn-delete">
-              <i class="fas fa-trash-alt"></i> Delete
-            </button>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Pagination -->
-      <div class="pagination">
-        <button class="page-btn disabled">
-          <i class="fas fa-chevron-left"></i>
-        </button>
-        <button class="page-btn active">1</button>
-        <button class="page-btn">2</button>
-        <button class="page-btn">3</button>
-        <button class="page-btn">
-          <i class="fas fa-chevron-right"></i>
-        </button>
-      </div>
-    </section>
-    
-    <!-- Edit Modal -->
-    <div class="modal" id="edit-modal">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3>Edit Quote</h3>
-          <button class="modal-close">&times;</button>
-        </div>
-        <div class="modal-body">
-          <form class="edit-form">
-            <div class="form-group">
-              <label>Quote</label>
-              <textarea class="form-input" rows="3">"Simplicity is the ultimate sophistication."</textarea>
-            </div>
-            <div class="form-group">
-              <label>Author</label>
-              <input type="text" class="form-input" value="Leonardo da Vinci">
-            </div>
-            <div class="form-group">
-              <label>Category</label>
-              <select class="form-input">
-                <option value="art" selected>Art</option>
-                <option value="inspiration">Inspiration</option>
-                <option value="philosophy">Philosophy</option>
-              </select>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary">Cancel</button>
-          <button class="btn btn-primary">Save</button>
-        </div>
-      </div>
-    </div>
-  </main>
-</div>
+  

@@ -12,54 +12,146 @@
         <div class="search-box d-flex flex-column flex-md-row align-items-stretch mb-3 gap-3">
             <div class="position-relative flex-grow-1">
                 <i class="fas fa-search search-icon position-absolute top-50 translate-middle-y ps-3 text-secondary"></i>
-                <input type="text" placeholder="Search for a quote, an author..." class="form-control ps-5 search-input rounded-pill border-2">
+                <input type="text"
+                       [(ngModel)]="searchQuery"
+                       (keyup.enter)="onSearch()"
+                       [placeholder]="searchPlaceholder"
+                       class="form-control ps-5 search-input rounded-pill border-2">
             </div>
-            <button class="search-btn btn btn-gradient rounded-pill d-flex align-items-center justify-content-center px-4">
+            <button class="search-btn btn btn-gradient rounded-pill d-flex align-items-center justify-content-center px-4"
+                    (click)="onSearch()">
                 Explore <i class="fas fa-arrow-right ms-2"></i>
             </button>
         </div>
     </div>
 
-    <!-- Quote Grid -->
-    <section class="all-quotes-grid row g-4">
-        <div class="col-md-6 col-lg-4">
-            <div class="quote-card p-4 rounded-4 bg-white shadow-sm position-relative h-100">
-                <div class="quote-content">
-                    <div class="quote-icon text-primary fs-4 mb-3"><i class="fas fa-quote-left"></i></div>
-                    <p class="quote-text fw-medium fst-italic">"Life is a mystery to be lived, not a problem to be solved."</p>
-                    <div class="quote-meta mt-3 d-flex flex-wrap gap-2">
-                        <span class="quote-author badge bg-light text-primary">Gandhi</span>
-                    </div>
-                    <div><span class="quote-category badge bg-light text-success">Philosophy</span></div>
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="text-center my-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- No Results Message -->
+    <div *ngIf="!isLoading && quotes.length === 0" class="text-center my-5">
+        <p class="lead text-muted">No quotes found. Try adjusting your search criteria.</p>
+    </div>
+
+    <!-- Modal d'édition -->
+    <div class="modal fade show" tabindex="-1" [ngClass]="{'d-block': isEditing}" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" *ngIf="editingQuote">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Quote</h5>
+                    <button type="button" class="btn-close" (click)="cancelEdit()"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="quoteText" class="form-label">Quote Text</label>
+                            <textarea 
+                                id="quoteText" 
+                                class="form-control" 
+                                rows="4" 
+                                [(ngModel)]="editingQuote.text" 
+                                name="quoteText" 
+                                required>
+                            </textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quoteAuthor" class="form-label">Author</label>
+                            <input 
+                                type="text" 
+                                id="quoteAuthor" 
+                                class="form-control" 
+                                [(ngModel)]="editingQuote.author" 
+                                name="quoteAuthor" 
+                                required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="quoteTags" class="form-label">Tags (comma separated)</label>
+                            <input 
+                                type="text" 
+                                id="quoteTags" 
+                                class="form-control" 
+                                [(ngModel)]="editingQuote.tags" 
+                                name="quoteTags">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+                    <button type="button" class="btn btn-primary" (click)="saveQuote()">Save changes</button>
                 </div>
             </div>
         </div>
+    </div>
 
-        <!-- Second Quote -->
-        <div class="col-md-6 col-lg-4">
-            <div class="quote-card p-4 rounded-4 bg-white shadow-sm position-relative h-100">
-                <div class="quote-content">
+    <!-- Quote Grid -->
+    <section class="all-quotes-grid row g-4" *ngIf="!isLoading && quotes.length > 0">
+        <div class="col-md-6 col-lg-4" *ngFor="let quote of quotes">
+            <div class="quote-card p-4 rounded-4 bg-white shadow-sm position-relative h-100 d-flex flex-column">
+                <div class="quote-content flex-grow-1">
                     <div class="quote-icon text-primary fs-4 mb-3"><i class="fas fa-quote-left"></i></div>
-                    <p class="quote-text fw-medium fst-italic">"Success is going from failure to failure without losing your enthusiasm."</p>
-                    <div class="quote-meta mt-3 d-flex flex-wrap gap-2">
-                        <span class="quote-author badge bg-light text-primary">Winston Churchill</span>
+                    <p class="quote-text fw-medium fst-italic">{{quote.text}}</p>
+                    <div class="quote-meta mt-3">
+                        <div class="mb-2">
+                            <span class="quote-author badge bg-light text-primary">{{quote.author}}</span>
+                        </div>
+                        <!-- Affichage de la catégorie si elle existe -->
+                        <div class="mb-2" *ngIf="quote.category">
+                            <span class="quote-category badge bg-light text-success">{{quote.category}}</span>
+                        </div>
+                        <!-- Affichage des tags -->
+                        <div class="quote-tags">
+                            <span class="quote-tag badge bg-light text-secondary me-1 mb-1 cursor-pointer" 
+                                  *ngFor="let tag of getTagsArray(quote.tags)"
+                                  (click)="filterByTag(tag)">
+                                {{tag}}
+                            </span>
+                        </div>
                     </div>
-                    <div><span class="quote-category badge bg-light text-success">Motivation</span></div>
+                </div>
+                <div class="quote-actions mt-auto d-flex justify-content-end gap-2">
+                    <button class="btn btn-outline-primary btn-sm" (click)="editQuote(quote)">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button class="btn btn-outline-danger btn-sm" (click)="deleteQuote(quote)">
+                        <i class="fas fa-trash-alt"></i> Delete
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Pagination -->
-    <div class="pagination-container d-flex justify-content-center mt-5 gap-2 flex-wrap">
-        <button class="pagination-btn btn btn-outline-secondary disabled"><i class="fas fa-chevron-left"></i> Previous</button>
-        <div class="page-numbers d-flex gap-1">
-            <button class="pagination-btn btn btn-gradient active">1</button>
-            <button class="pagination-btn btn btn-outline-secondary">2</button>
-            <button class="pagination-btn btn btn-outline-secondary">3</button>
-            <span class="pagination-dots text-muted align-self-end">...</span>
-            <button class="pagination-btn btn btn-outline-secondary">8</button>
-        </div>
-        <button class="pagination-btn btn btn-outline-secondary">Next <i class="fas fa-chevron-right"></i></button>
+    <div class="pagination-container d-flex justify-content-center mt-5 gap-2 flex-wrap" *ngIf="totalPages > 0">
+        <!-- Bouton Précédent -->
+        <button class="pagination-btn btn btn-outline-secondary"
+                [disabled]="currentPage === 1"
+                (click)="onPageChange(currentPage - 1)">
+            <i class="fas fa-chevron-left"></i> Previous
+        </button>
+        
+        <!-- Boutons de pages -->
+        <button *ngFor="let page of pages" 
+                class="pagination-btn btn" 
+                [class.btn-primary]="page === currentPage" 
+                [class.btn-outline-secondary]="page !== currentPage"
+                (click)="onPageChange(page)">
+            {{page}}
+        </button>
+        
+        <!-- Bouton Suivant -->
+        <button class="pagination-btn btn btn-outline-secondary"
+                [disabled]="currentPage === totalPages"
+                (click)="onPageChange(currentPage + 1)">
+            Next <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+    
+    <!-- Indicateur de page actuelle -->
+    <div class="text-center text-muted mt-3" *ngIf="totalPages > 0">
+        Page {{currentPage}} of {{totalPages}} ({{totalQuotes}} quotes total)
     </div>
 </main>
