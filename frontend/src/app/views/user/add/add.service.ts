@@ -23,7 +23,7 @@ export class AddService {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         // Assurez-vous que le token est récupéré du stockage local
-        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ3MDgzMzc0LCJpYXQiOjE3NDcwODI0NzQsImp0aSI6ImY5MDFmZWVmYTVkMDQxMDI5ZWUzODIxYjNlNjQyNjNlIiwidXNlcl9pZCI6MTB9.afVSbplCDEoKqFqCVDWBGtYXND0YdDDVHkaj7Dxah9w`
+        'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ3MTM5MTc1LCJpYXQiOjE3NDcxMzgyNzUsImp0aSI6IjlkMGU5ZWRhOTYzYjRmMWQ4MzU0MmI0MDJjN2Q3OTBkIiwidXNlcl9pZCI6MTB9.lh8OVyk5Bli2J_R6Xmg15VBaVxeSolU24DSERq-5zug`
       })
     };
 

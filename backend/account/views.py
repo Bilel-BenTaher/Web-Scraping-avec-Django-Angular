@@ -147,12 +147,15 @@ class UserProfileView(generics.RetrieveUpdateDestroyAPIView):
         return Response(serializer.data)
     
     def update(self, request, *args, **kwargs):
-        # Mettre à jour le profil (PUT)
+        # Cette méthode gère à la fois PUT et PATCH
         user = self.get_object()
+        
+        # Utiliser partial=True pour permettre les mises à jour partielles (PATCH)
         serializer = self.get_serializer(user, data=request.data, partial=True)
         
         if serializer.is_valid():
             serializer.save()
+            # Ne jamais renvoyer le mot de passe, même hashé
             return Response({
                 'user': serializer.data,
                 'message': 'Profil mis à jour avec succès'

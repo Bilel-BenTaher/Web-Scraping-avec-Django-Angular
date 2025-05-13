@@ -35,9 +35,27 @@ class SignOutSerializer(serializers.Serializer):
     refresh = serializers.CharField(required=True)
     
 class UserProfileSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(write_only=True, required=False)
+    
     class Meta:
         model = User
-        fields = ('id', 'username', 'first_name', 'last_name', 'email')
+        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'password')
         extra_kwargs = {
             'username': {'read_only': True},  # Empêche la modification du nom d'utilisateur
+            'password': {'write_only': True}  # Le mot de passe n'est jamais renvoyé dans les réponses
         }
+    
+    def update(self, instance, validated_data):
+        # Gérer séparément le mot de passe s'il est fourni
+        password = validated_data.pop('password', None)
+        
+        # Mettre à jour les autres champs normalement
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+            
+        # Si un mot de passe est fourni, le hacher correctement avant de l'enregistrer
+        if password is not None:
+            instance.set_password(password)
+            
+        instance.save()
+        return instance

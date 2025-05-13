@@ -160,6 +160,7 @@
 
 .form-group {
   margin-bottom: 1rem;
+  
 }
 
 .form-group label {
@@ -167,7 +168,12 @@
   margin-bottom: 0.5rem;
   font-weight: 500;
   color: var(--dark-color);
+  
 }
+#confirm-delete{border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 1.2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);}
 
 .input-group {
   position: relative;
@@ -273,10 +279,7 @@
 
 
 
-.btn-danger {
-  background: var(--danger-color);
-  color: white;
-}
+
 
 .btn-danger:hover {
   background: #DC2626;
@@ -383,12 +386,85 @@
   align-items: flex-start;
   gap: 0.75rem;
 }
+/* Style complet pour le modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  overflow-y: auto;
+  background-color: rgba(0,0,0,0.5);
+  transition: opacity 0.3s ease;
+}
 
+.modal.show {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  opacity: 1 !important;
+}
+
+.modal-content {
+  background: white;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  width: 100%;
+  max-width: 500px;
+  position: relative;
+  animation: modalFadeIn 0.3s ease-out;
+}
+
+@keyframes modalFadeIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Pour le scroll automatique vers le modal */
+.modal:target {
+  display: flex;
+}
+
+/* Style pour le header et footer du modal */
+.modal-header {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.modal-footer {
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+  margin-top: 15px;
+  text-align: right;
+}
+
+/* Bouton de fermeture */
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
 .warning-box i {
   color: var(--danger-color);
   font-size: 1.2rem;
   margin-top: 2px;
 }
+
 
 .warning-box p {
   margin: 0;

@@ -14,7 +14,7 @@ export class QuotesService {
   // Méthode pour obtenir les headers d'authentification
   private getAuthHeaders(): HttpHeaders {
     return new HttpHeaders({
-      'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ3MDgzMzc0LCJpYXQiOjE3NDcwODI0NzQsImp0aSI6ImY5MDFmZWVmYTVkMDQxMDI5ZWUzODIxYjNlNjQyNjNlIiwidXNlcl9pZCI6MTB9.afVSbplCDEoKqFqCVDWBGtYXND0YdDDVHkaj7Dxah9w`
+      'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ3MTUzNjIwLCJpYXQiOjE3NDcxNTI3MjAsImp0aSI6IjU2YWY2ODE3ZDI1ZjRiOTk4ZWU1NWVjZjJlN2Q0MGUwIiwidXNlcl9pZCI6MTB9.eTxL_gj6vKKevkNkDV8_jhAYrXFoN2YJUnh7_pZ1MSI`
     });
   }
 
