@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuotesService } from '../quotes.service';
 import { Quote, PaginatedResponse } from '../quotes.module';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-quotes',
@@ -22,10 +23,11 @@ export class QuotesComponent implements OnInit {
   editingQuote: Quote | null = null;
   isEditing = false;
   
-  constructor(private quoteService: QuotesService) { }
+  constructor(private quoteService: QuotesService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.loadQuotes();
+    this.authService.checkAuth();
   }
 
   loadQuotes(): void {

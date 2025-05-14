@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" [ngClass]="{'navbar-transparent': isTransparent}">
   <div class="container">
     <!-- Brand -->
-    <a class="navbar-brand fw-bold d-flex align-items-center" routerLink="/user">
+    <a class="navbar-brand fw-bold d-flex align-items-center" routerLink="/user/home">
       <i class="fas fa-quote-left text-primary me-2"></i>
       <span>QuotesHub</span>
     </a>
@@ -46,7 +46,7 @@
             </li>
             <li><hr class="dropdown-divider"></li>
             <li>
-              <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="logout()">
+              <a class="dropdown-item text-danger" href="javascript:void(0)" (click)="onLogout()">
                 <i class="fas fa-sign-out-alt me-2"></i>Logout
               </a>
             </li>
@@ -63,7 +63,7 @@
 
     <div class="sidebar-footer">
       <div class="nav-link">
-        <span>Sophie Proverb</span>
+        
       </div>
     </div>
 
@@ -94,7 +94,7 @@
     </nav>
 
     <div class="sidebar-footer">
-      <a routerLink="logout" class="nav-link">
+      <a routerLink="logout" class="nav-link" (click)="onLogout()">
         <i class="fas fa-sign-out-alt me-2"></i>
         <span>Logout</span>
       </a>
@@ -129,7 +129,7 @@
         <h5 class="fw-bold mb-3">Account</h5>
         <ul class="list-unstyled">
           <li><a routerLink="profile" class="text-white text-decoration-none">Profile</a></li>
-          <li><a routerLink="" class="text-white text-decoration-none">Logout</a></li>
+          <li><a routerLink="" class="text-white text-decoration-none" (click)="onLogout()">Logout</a></li>
         </ul>
       </div>
       <div class="col-md-4">

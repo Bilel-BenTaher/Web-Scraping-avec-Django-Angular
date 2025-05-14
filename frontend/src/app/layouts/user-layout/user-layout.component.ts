@@ -1,19 +1,24 @@
 import { Component, OnInit, HostListener } from '@angular/core';
+import { LogoutService } from 'src/app/views/user/logout/logout.service';
+
+
 
 @Component({
   selector: 'app-user-layout',
   templateUrl: './user-layout.component.html',
-  styleUrls: ['./user-layout.component.css']
+  styleUrls: ['./user-layout.component.css'],
+  template: `
+    <button (click)="onLogout()">Déconnexion</button>
+  `
 })
 export class UserLayoutComponent implements OnInit {
   isTransparent = false;
   isMenuCollapsed = true;
   isUserDropdownOpen = false;
 
-  constructor() { }
+  constructor(private logoutService: LogoutService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   @HostListener('window:scroll', [])
   checkScroll(): void {
@@ -48,10 +53,9 @@ export class UserLayoutComponent implements OnInit {
       this.isMenuCollapsed = true;
     }
   }
-
-  logout() {
-    // Implémentez la déconnexion ici
-    console.log('Déconnexion...');
-    this.isUserDropdownOpen = false;
+  
+   onLogout(): void {
+    this.logoutService.logout();
   }
+
 }

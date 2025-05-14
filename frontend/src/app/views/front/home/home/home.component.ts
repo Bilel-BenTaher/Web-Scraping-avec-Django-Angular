@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -11,6 +12,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
   featuredQuotes = [
     {
       text: "Life is a mystery to be lived, not a problem to be solved.",

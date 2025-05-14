@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../profile.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-profile',
@@ -22,11 +23,13 @@ export class ProfileComponent implements OnInit {
 
   constructor(
     private profileService: ProfileService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
     this.loadProfile();
+    this.authService.checkAuth();
   }
 
   loadProfile(): void {

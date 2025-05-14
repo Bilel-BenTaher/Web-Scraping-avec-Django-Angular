@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AddService, Quote } from '../add.service';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/auth.service';
 
 @Component({
   selector: 'app-add',
@@ -17,7 +18,8 @@ export class AddComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private addService: AddService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     // Initialisation du formulaire
     this.quoteForm = this.formBuilder.group({
@@ -27,9 +29,7 @@ export class AddComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    // Initialisation supplémentaire si nécessaire
-  }
+  ngOnInit(): void {this.authService.checkAuth();}
 
   // Getters pour accéder facilement aux champs du formulaire
   get text() { return this.quoteForm.get('text'); }

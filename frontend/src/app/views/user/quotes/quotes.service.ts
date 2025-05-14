@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PaginatedResponse, Quote } from './quotes.module';
+import { LoginService } from '../../front/login/login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,55 +10,62 @@ import { PaginatedResponse, Quote } from './quotes.module';
 export class QuotesService {
   private apiUrl = 'http://127.0.0.1:8000/quotes/';
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private loginService: LoginService) { }
 
   // Méthode pour obtenir les headers d'authentification
   private getAuthHeaders(): HttpHeaders {
+    const token = localStorage.getItem('access_token');
+    if (!token) {
+      throw new Error('No access token found');
+    }
     return new HttpHeaders({
-      'Authorization': `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzQ3MTUzNjIwLCJpYXQiOjE3NDcxNTI3MjAsImp0aSI6IjU2YWY2ODE3ZDI1ZjRiOTk4ZWU1NWVjZjJlN2Q0MGUwIiwidXNlcl9pZCI6MTB9.eTxL_gj6vKKevkNkDV8_jhAYrXFoN2YJUnh7_pZ1MSI`
+      'Authorization': `Bearer ${token}`
     });
   }
 
   getQuotes(page: number = 1, search?: string): Observable<PaginatedResponse> {
-    // Créer les paramètres avec page
     let params = new HttpParams().set('page', page.toString());
     
-    // Ajouter le paramètre de recherche s'il existe
     if (search && search.trim() !== '') {
       if (search.startsWith('#')) {
-        // Si la recherche commence par #, on filtre par tag
         params = params.set('tags', search.substring(1));
       } else {
-        // Sinon, on filtre par auteur
         params = params.set('author', search);
       }
     }
     
-    // Faire la requête avec les paramètres et headers
     return this.http.get<PaginatedResponse>(this.apiUrl, { 
-      headers: this.getAuthHeaders(),
+      headers: this.loginService.getAuthorizationHeader() ,
       params: params 
     });
   }
 
-  // Méthode pour obtenir une citation spécifique par ID
   getQuote(id: number): Observable<Quote> {
     return this.http.get<Quote>(`${this.apiUrl}${id}/`, {
-      headers: this.getAuthHeaders()
+      headers: this.loginService.getAuthorizationHeader() 
     });
   }
 
-  // Méthode pour mettre à jour une citation
   updateQuote(id: number, quoteData: Partial<Quote>): Observable<Quote> {
     return this.http.put<Quote>(`${this.apiUrl}update/${id}/`, quoteData, {
-      headers: this.getAuthHeaders()
+      headers: this.loginService.getAuthorizationHeader() 
     });
   }
 
-  // Méthode pour supprimer une citation
   deleteQuote(id: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}delete/${id}/`, {
-      headers: this.getAuthHeaders()
+      headers: this.loginService.getAuthorizationHeader() 
     });
+  }
+
+  // Nouvelle méthode pour gérer les erreurs de token
+  private handleTokenError(error: any): void {
+    if (error.status === 401) {
+      // Token invalide ou expiré
+      localStorage.removeItem('access_token');
+      // Vous pourriez aussi rediriger vers la page de login ici
+      console.error('Session expired, please login again');
+    }
+    throw error;
   }
 }

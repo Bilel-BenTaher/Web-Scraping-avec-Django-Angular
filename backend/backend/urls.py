@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from scraper.views import QuoteList,QuoteDetail
 from account.views import SignUpView,UserProfileView,SignInView,SignOutView,ForgotPasswordView,ResetPasswordView
-from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.views import TokenObtainPairView,  TokenRefreshView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('quotes/', QuoteList.as_view()),
@@ -32,6 +32,7 @@ urlpatterns = [
     path('profile/update/', UserProfileView.as_view()),
     path('profile/delete/', UserProfileView.as_view()),
     path('token/', TokenObtainPairView.as_view()), 
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('forgot_password/', ForgotPasswordView.as_view(), name='forgot_password'),
     path('reset_password/<str:token>/', ResetPasswordView.as_view(), name='reset_password'),
 ]
