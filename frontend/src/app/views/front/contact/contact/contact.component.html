@@ -1,5 +1,4 @@
 <div class="contact-page bg-light">
-
   <!-- Hero Section -->
   <section class="contact-hero text-white py-5">
     <div class="container text-center py-4">
@@ -14,7 +13,6 @@
   <section class="contact-main py-5">
     <div class="container">
       <div class="row g-5">
-
         <!-- Contact Form -->
         <div class="col-lg-7">
           <div class="card border-0 shadow-lg hover-scale">
@@ -23,24 +21,52 @@
                 <i class="fas fa-paper-plane me-2 text-primary"></i> Send a Message
               </h3>
 
-              <form>
+              <!-- Alert messages -->
+              <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ successMessage }}
+                <button type="button" class="btn-close" (click)="successMessage = ''"></button>
+              </div>
+
+              <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ errorMessage }}
+                <button type="button" class="btn-close" (click)="errorMessage = ''"></button>
+              </div>
+
+              <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
                 <div class="mb-4">
                   <label for="name" class="form-label">Your Name</label>
-                  <input id="name" type="text" class="form-control form-control-lg" placeholder="John Smith">
+                  <input id="name" type="text" class="form-control form-control-lg" 
+                         placeholder="John Smith" formControlName="name"
+                         [ngClass]="{ 'is-invalid': submitted && f['name'].errors }">
+                  <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
+                    <div *ngIf="f['name'].errors['required']">Name is required</div>
+                  </div>
                 </div>
 
                 <div class="mb-4">
                   <label for="email" class="form-label">Email</label>
-                  <input id="email" type="email" class="form-control form-control-lg" placeholder="john@example.com">
+                  <input id="email" type="email" class="form-control form-control-lg" 
+                         placeholder="john@example.com" formControlName="email"
+                         [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
+                  <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                    <div *ngIf="f['email'].errors['required']">Email is required</div>
+                    <div *ngIf="f['email'].errors['email']">Email must be valid</div>
+                  </div>
                 </div>
 
                 <div class="mb-4">
                   <label for="message" class="form-label">Message</label>
-                  <textarea id="message" class="form-control form-control-lg" rows="5" placeholder="Your message..."></textarea>
+                  <textarea id="message" class="form-control form-control-lg" rows="5" 
+                            placeholder="Your message..." formControlName="message"
+                            [ngClass]="{ 'is-invalid': submitted && f['message'].errors }"></textarea>
+                  <div *ngIf="submitted && f['message'].errors" class="invalid-feedback">
+                    <div *ngIf="f['message'].errors['required']">Message is required</div>
+                  </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary btn-lg w-100">
-                  <i class="fas fa-paper-plane me-2"></i> Send
+                <button type="submit" class="btn btn-primary btn-lg w-100" [disabled]="loading">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                  <i *ngIf="!loading" class="fas fa-paper-plane me-2"></i> Send
                 </button>
               </form>
             </div>
@@ -90,10 +116,8 @@
                 <i class="fab fa-linkedin-in"></i>
               </a>
             </div>
-
           </div>
         </div>
-
       </div>
     </div>
   </section>
