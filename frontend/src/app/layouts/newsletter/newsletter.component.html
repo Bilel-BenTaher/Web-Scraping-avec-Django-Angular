@@ -1,0 +1,34 @@
+<form [formGroup]="subscribeForm" (ngSubmit)="onSubmit()" class="newsletter-form">
+  <div class="input-group mb-1">
+    <input 
+      type="email" 
+      class="form-control" 
+      placeholder="Your Email" 
+      formControlName="email"
+      [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+      aria-label="Email for newsletter"
+    >
+    <button 
+      class="btn btn-primary" 
+      type="submit" 
+      [disabled]="loading"
+      aria-label="Subscribe to newsletter"
+    >
+      <i *ngIf="!loading" class="fas fa-paper-plane"></i>
+      <span *ngIf="loading" class="spinner-border spinner-border-sm"></span>
+    </button>
+  </div>
+  
+  <div *ngIf="submitted && f['email'].errors" class="text-danger small mt-1">
+    <div *ngIf="f['email'].errors['required']">Email is required</div>
+    <div *ngIf="f['email'].errors['email']">Please enter a valid email address</div>
+  </div>
+  
+  <div *ngIf="successMessage" class="text-success small mt-1">
+    {{ successMessage }}
+  </div>
+  
+  <div *ngIf="errorMessage" class="text-danger small mt-1">
+    {{ errorMessage }}
+  </div>
+</form>
