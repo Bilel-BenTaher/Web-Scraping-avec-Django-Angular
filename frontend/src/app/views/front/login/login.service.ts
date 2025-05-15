@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { LogoutService } from '../../user/logout/logout.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,19 @@ export class LoginService {
       });
   }
 
+  // Méthode pour mot de passe oublié
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post(`${this.API_URL}/forgot_password/`, { email });
+  }
+
+  // Méthode pour réinitialiser le mot de passe
+  resetPassword(token: string, password: string, confirmPassword: string): Observable<any> {
+    return this.http.post(`${this.API_URL}/reset_password/${token}/`, {
+      password,
+      confirmPassword
+    });
+  }
+
   // Sauvegarde les données d'authentification
   private saveAuthData(authData: any): void {
     localStorage.setItem('access_token', authData.tokens.access);
@@ -64,12 +78,12 @@ export class LoginService {
   // Rafraîchit le token
   refreshToken(): void {
     const refreshToken = localStorage.getItem('refresh_token');
-
+    
     if (!refreshToken) {
       this.logoutService.logout();
       return;
     }
-
+    
     this.http.post(`${this.API_URL}/token/refresh/`, { refresh: refreshToken })
       .subscribe({
         next: (response: any) => {
@@ -94,7 +108,7 @@ export class LoginService {
   private startTokenRefresh(): void {
     // Arrêter le timer existant s'il y en a un
     this.stopTokenRefresh();
-
+    
     // Rafraîchir le token immédiatement
     this.refreshToken();
     

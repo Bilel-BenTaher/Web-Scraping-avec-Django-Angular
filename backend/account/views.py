@@ -1,3 +1,5 @@
+import json
+from django.shortcuts import render
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from django.contrib.auth import get_user_model
@@ -183,60 +185,84 @@ class ForgotPasswordView(APIView):
             user = User.objects.get(email=data['email'])
         except User.DoesNotExist:
             return Response({'error': 'Aucun utilisateur trouvé avec cet email'}, status=status.HTTP_404_NOT_FOUND)
-        
+            
         # Générer un token et définir sa date d'expiration
         token = get_random_string(40)
         expire_date = datetime.now() + timedelta(minutes=15)
-        
+            
         # Mettre à jour le profil de l'utilisateur
         user.profile.reset_password_token = token
         user.profile.reset_password_expire = expire_date
         user.profile.save()
-        
-        # Envoyer l'email avec le lien de réinitialisation
+            
+        # Modifier le lien pour utiliser le domaine de votre frontend Angular
         link = f"http://localhost:8000/reset_password/{token}/"
         body = f"Votre lien de réinitialisation de mot de passe est : {link}"
-        
+            
         send_mail(
             "Réinitialisation de mot de passe",
             body,
             "votre_email@example.com",
             [data['email']]
         )
-        
+            
         return Response({'details': f'Email de réinitialisation envoyé à {data["email"]}'})
 
 class ResetPasswordView(APIView):
-    def post(self, request, token):
-        data = request.data
-        
-        # Vérifier si les champs requis sont présents
-        if 'password' not in data or 'confirmPassword' not in data:
-            return Response({'error': 'Les champs mot de passe sont requis'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        # Vérifier si les mots de passe correspondent
-        if data['password'] != data['confirmPassword']:
-            return Response({'error': 'Les mots de passe ne correspondent pas'}, status=status.HTTP_400_BAD_REQUEST)
-        
-        # Trouver l'utilisateur avec ce token
+    def get(self, request, token):
+        # Vérifier que le token existe et n'est pas expiré
         try:
             user = User.objects.get(profile__reset_password_token=token)
+            if user.profile.reset_password_expire < timezone.now():
+                # Si expiré, on pourrait rediriger vers une page d'erreur
+                pass
         except User.DoesNotExist:
-            return Response({'error': 'Token invalide'}, status=status.HTTP_400_BAD_REQUEST)
+            # Si token invalide, on pourrait rediriger vers une page d'erreur
+            pass
         
-        # Vérifier si le token n'est pas expiré
-        if user.profile.reset_password_expire < timezone.now():
-            return Response({'error': 'Token expiré'}, status=status.HTTP_400_BAD_REQUEST)
+        # Servir la page HTML pour réinitialiser le mot de passe
+        return render(request, 'reset_password_template.html')
+    
+    def post(self, request, token):
+        # Pour les requêtes Ajax depuis la page HTML
+        try:
+            # Si la requête est au format JSON (depuis la page HTML)
+            if request.content_type == 'application/json':
+                data = json.loads(request.body)
+            else:
+                # Si la requête vient de l'API (comme avant)
+                data = request.data
+                
+            # Vérifier si les champs requis sont présents
+            if 'password' not in data or 'confirmPassword' not in data:
+                return Response({'error': 'Les champs mot de passe sont requis'}, status=status.HTTP_400_BAD_REQUEST)
+                
+            # Vérifier si les mots de passe correspondent
+            if data['password'] != data['confirmPassword']:
+                return Response({'error': 'Les mots de passe ne correspondent pas'}, status=status.HTTP_400_BAD_REQUEST)
+                
+            # Trouver l'utilisateur avec ce token
+            try:
+                user = User.objects.get(profile__reset_password_token=token)
+            except User.DoesNotExist:
+                return Response({'error': 'Token invalide'}, status=status.HTTP_400_BAD_REQUEST)
+                
+            # Vérifier si le token n'est pas expiré
+            if user.profile.reset_password_expire < timezone.now():
+                return Response({'error': 'Token expiré'}, status=status.HTTP_400_BAD_REQUEST)
+                
+            # Mettre à jour le mot de passe
+            user.password = make_password(data['password'])
+                
+            # Effacer le token et sa date d'expiration
+            user.profile.reset_password_token = ""
+            user.profile.reset_password_expire = None
+                
+            # Sauvegarder les modifications
+            user.profile.save()
+            user.save()
+                
+            return Response({'details': 'Mot de passe réinitialisé avec succès'})
         
-        # Mettre à jour le mot de passe
-        user.password = make_password(data['password'])
-        
-        # Effacer le token et sa date d'expiration
-        user.profile.reset_password_token = ""
-        user.profile.reset_password_expire = None
-        
-        # Sauvegarder les modifications
-        user.profile.save()
-        user.save()
-        
-        return Response({'details': 'Mot de passe réinitialisé avec succès'})
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
