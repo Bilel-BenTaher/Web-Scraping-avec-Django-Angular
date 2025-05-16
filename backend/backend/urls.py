@@ -37,4 +37,5 @@ urlpatterns = [
     path('reset_password/<str:token>/', ResetPasswordView.as_view(), name='reset_password'),
     path('api/contact/', include('contact.urls')),
     path('api/newsletter/', include('newsletter.urls')),
+     path('api/', include('scraper.urls')),
 ]

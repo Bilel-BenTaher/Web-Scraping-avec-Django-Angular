@@ -18,6 +18,7 @@ export class QuotesComponent implements OnInit {
   searchQuery = '';
   isLoading = false;
   searchPlaceholder = 'Search by author (e.g. john) or tag (e.g. #react)';
+  scrapingMessage = '';
 
   // Variables pour l'édition
   editingQuote: Quote | null = null;
@@ -46,6 +47,29 @@ export class QuotesComponent implements OnInit {
       error: (error) => {
         console.error('Error loading quotes:', error);
         this.isLoading = false;
+      }
+    });
+  }
+
+  triggerScraping(): void {
+    this.isLoading = true;
+    this.scrapingMessage = 'Starting scraping process...';
+    
+    this.quoteService.triggerScraping().subscribe({
+      next: (response) => {
+        this.scrapingMessage = 'Scraping running in background. Please wait...';
+        this.isLoading = false;
+        
+        // After a delay, reload the quotes
+        setTimeout(() => {
+          this.loadQuotes();
+          this.scrapingMessage = 'Scraping completed. Quotes have been updated.';
+        }, 5000); // 5-second delay - adjust as needed
+      },
+      error: (error) => {
+        this.scrapingMessage = 'Error while starting the scraping process.';
+        this.isLoading = false;
+        console.error('Error:', error);
       }
     });
   }

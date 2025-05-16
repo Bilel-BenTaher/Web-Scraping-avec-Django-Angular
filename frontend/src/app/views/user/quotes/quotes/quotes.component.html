@@ -23,6 +23,23 @@
                 Explore <i class="fas fa-arrow-right ms-2"></i>
             </button>
         </div>
+        
+        <!-- Scraping Button - Modern Integration -->
+        <div class="scraping-section text-center mt-3 pt-3 border-top">
+            <button (click)="triggerScraping()" 
+                    [disabled]="isLoading" 
+                    class="scraping-btn btn btn-outline-primary rounded-pill px-4">
+                <i class="fas fa-sync-alt me-2"></i>
+                {{ isLoading ? 'Scraping in progress...' : 'Update Quotes (Scraping)' }}
+            </button>
+            
+            <div *ngIf="scrapingMessage" class="scraping-message mt-2">
+                <div class="alert alert-info alert-dismissible fade show mb-0" role="alert">
+                    {{ scrapingMessage }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Loading Indicator -->

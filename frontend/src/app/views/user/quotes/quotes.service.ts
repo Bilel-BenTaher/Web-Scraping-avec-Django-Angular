@@ -9,6 +9,7 @@ import { LoginService } from '../../front/login/login.service';
 })
 export class QuotesService {
   private apiUrl = 'http://127.0.0.1:8000/quotes/';
+  private apiscr = 'http://127.0.0.1:8000';
   
   constructor(private http: HttpClient,private loginService: LoginService) { }
 
@@ -67,5 +68,10 @@ export class QuotesService {
       console.error('Session expired, please login again');
     }
     throw error;
+  }
+
+    // Méthode pour déclencher le scraping
+  triggerScraping(): Observable<any> {
+    return this.http.post(`${this.apiscr}/api/trigger-scraping/`, {});
   }
 }

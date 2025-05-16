@@ -14,6 +14,7 @@ from datetime import timedelta
 import os
 from pathlib import Path
 from decouple import config
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -49,6 +50,8 @@ INSTALLED_APPS = [
     'account.apps.AccountConfig',
     'contact.apps.ContactConfig',
     'newsletter.apps.NewsletterConfig',
+    'django_celery_results',
+    'django_celery_beat',
 
 ]
 REST_FRAMEWORK = {
@@ -69,6 +72,24 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
     'AUTH_HEADER_TYPES': ('Bearer',),
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+}
+
+# Celery Configuration
+CELERY_BROKER_URL = 'redis://localhost:6379/0'  # URL Redis pour le broker
+CELERY_RESULT_BACKEND = 'django-db'  # Utiliser la base de données Django pour stocker les résultats
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
+
+
+
+CELERY_BEAT_SCHEDULE = {
+    'scrape-quotes-daily': {
+        'task': 'scraping.tasks.scrape_quotes_task',
+        'schedule': crontab(minute='*/1'), 
+        
+    },
 }
 
 
