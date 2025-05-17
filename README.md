@@ -83,7 +83,7 @@ Cette option permet de déclencher le scraping depuis l'interface utilisateur An
 4. Lancez un worker Celery pour exécuter les tâches de scraping :
 
    ```bash
-   celery -A backend worker --loglevel=info
+   celery -A backend worker --loglevel=info --pool=solo
    ```
 
 #### Option 2 : Scraping automatisé avec des tâches périodiques
