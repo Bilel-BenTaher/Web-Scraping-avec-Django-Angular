@@ -144,7 +144,7 @@ ng serve
 | Couche          | Outils                                              |
 | --------------- | --------------------------------------------------- |
 | Backend         | Django 4, Django REST Framework, Celery, Playwright |
-| Frontend        | Angular 14, Angular Material, TypeScript            |
+| Frontend        | Angular 14, TypeScript                              |
 | Base de données | PostgreSQL                                          |
 | Message Broker  | Redis                                               |
 
