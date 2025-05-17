@@ -1,5 +1,4 @@
 
-
 ---
 
 # 📘 Projet Django + Angular – Scraping de citations
@@ -7,7 +6,6 @@
 Application web permettant de **scraper des citations** depuis [Quotes to Scrape (JS)](https://quotes.toscrape.com/js/), de les **stocker dans une base de données via une API Django REST**, et de les **afficher dans une interface Angular** avec **filtres dynamiques** et **pagination**.
 
 ---
-
 
 ## 🛠 Installation du projet
 
@@ -60,16 +58,49 @@ npm install
 
 ```bash
 cd ../backend
-python manage.py scrape_quotes
 ```
 
-**Options disponibles :**
-- `--headless=false` : permet d'afficher le navigateur pendant le scraping
-- `--max-pages=5` : limite le nombre de pages à scraper
+#### Option 1 : Scraping manuel via l'interface Angular
+
+Cette option permet de déclencher le scraping depuis l'interface utilisateur Angular.
+
+1. Assurez-vous que **Redis** est installé sur votre machine.
+
+2. Démarrez le service Redis :
+
+   ```bash
+   sudo service redis-server start
+   ```
+
+3. Vérifiez que Redis fonctionne correctement :
+
+   ```bash
+   redis-cli ping
+   ```
+
+   Vous devriez obtenir la réponse `PONG`.
+
+4. Lancez un worker Celery pour exécuter les tâches de scraping :
+
+   ```bash
+   celery -A backend worker --loglevel=info
+   ```
+
+#### Option 2 : Scraping automatisé avec des tâches périodiques
+
+Cette option permet d’exécuter le scraping à intervalles réguliers.
+
+1. Lancez le scheduler Celery Beat :
+
+   ```bash
+   celery -A backend beat -l info
+   ```
 
 ---
 
 ### 2. Lancer le serveur Django (API)
+
+Dans un autre terminal, démarrez le serveur :
 
 ```bash
 python manage.py runserver
@@ -94,24 +125,29 @@ ng serve
 
 ### 🔗 API REST Django
 
-| Endpoint                        | Méthode | Description                    |
-|--------------------------------|---------|--------------------------------|
-| `/quotes/`                 | GET     | Liste paginée des citations   |
-| `/quotes/?author=...`      | GET     | Filtrer par auteur            |
-| `/quotes/?tag=...`         | GET     | Filtrer par tag               |
+| Endpoint              | Méthode | Description                 |
+| --------------------- | ------- | --------------------------- |
+| `/quotes/`            | GET     | Liste paginée des citations |
+| `/quotes/?author=...` | GET     | Filtrer par auteur          |
+| `/quotes/?tag=...`    | GET     | Filtrer par tag             |
 
 ### 🖥️ Interface Angular
 
-- Filtres dynamiques par auteur ou tag
-- Pagination automatique
+* Filtres dynamiques par auteur ou tag
+* Pagination automatique
+* Déclenchement manuel du scraping via l’interface
+
 ---
 
 ## 🧰 Technologies utilisées
 
-| Couche       | Outils                          |
-|--------------|----------------------------------|
-| Backend      | Django 4, Django REST Framework, Playwright |
-| Frontend     | Angular 14, Angular Material, TypeScript   |
-| Base de données |  PostgreSQL  |
+| Couche          | Outils                                              |
+| --------------- | --------------------------------------------------- |
+| Backend         | Django 4, Django REST Framework, Celery, Playwright |
+| Frontend        | Angular 14, Angular Material, TypeScript            |
+| Base de données | PostgreSQL                                          |
+| Message Broker  | Redis                                               |
 
 ---
+
+
