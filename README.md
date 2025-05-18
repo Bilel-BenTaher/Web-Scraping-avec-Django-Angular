@@ -151,7 +151,7 @@ ng serve
 ---
 ## **Vidéo de Présentation**
 
-"Découvrez une démonstration du projet en vidéo. Cliquez sur 'Raw' pour la télécharger : [Voir la vidéo](video/video_quotes.mp4) 
+"Découvrez une démonstration du projet en vidéo. Cliquez sur 'View raw' pour la télécharger : [Voir la vidéo](video/video_quotes.mp4) 
 
 ---
 
