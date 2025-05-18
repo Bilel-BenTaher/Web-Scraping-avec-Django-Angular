@@ -149,5 +149,11 @@ ng serve
 | Message Broker  | Redis                                               |
 
 ---
+## **Vidéo de Présentation**
+
+Découvrez une démonstration du projet en vidéo : [Voir la vidéo](video/video_quotes.mp4) 
+
+---
+
 
 
