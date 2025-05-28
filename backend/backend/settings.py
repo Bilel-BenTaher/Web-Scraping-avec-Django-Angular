@@ -62,7 +62,11 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 5 , # Nombre d'items par page
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
     ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
 }
 
 SIMPLE_JWT = {
@@ -76,21 +80,41 @@ SIMPLE_JWT = {
 
 # Celery Configuration
 CELERY_BROKER_URL = 'redis://localhost:6379/0'  # URL Redis pour le broker
-CELERY_RESULT_BACKEND = 'django-db'  # Utiliser la base de données Django pour stocker les résultats
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'  # Utiliser la base de données Django pour stocker les résultats
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = 'UTC'
+CELERY_TIMEZONE = 'Africa/Tunis'
 
 
 
+# CORRECTION MAJEURE: Utilisez les bons noms de tâches
 CELERY_BEAT_SCHEDULE = {
+    # Citations quotidiennes - CORRIGÉ
+    'send-daily-quotes': {
+        'task': 'scraper.tasks.envoyer_citations_quotidiennes',  # ✅ Nom correct
+        'schedule': crontab(hour=8, minute=0),  # 8:00 AM tous les jours
+    },
+    
+    # Notifications multiples dans la journée - CORRIGÉ
+    'send-multiple-quotes': {
+        'task': 'scraper.tasks.envoyer_citations_quotidiennes',  # ✅ Nom correct
+        'schedule': crontab(hour='8,12,18', minute=0),  # 8h30, 12h30, 18h30
+    },
+    
+    # Scraping quotidien - CORRIGÉ
     'scrape-quotes-daily': {
-        'task': 'scraping.tasks.scrape_quotes_task',
-        'schedule': crontab(minute='*/1'), 
-        
+        'task': 'scraper.tasks.scrape_quotes_task',  # ✅ scraper, pas scraping
+        'schedule': crontab(hour=2, minute=0),  # 2h du matin (pas toutes les minutes!)
+    },
+    
+    # Nettoyage des abonnements expirés - CORRIGÉ
+    'cleanup-expired-subscriptions': {
+        'task': 'scraper.tasks.nettoyer_abonnements_expires',  # ✅ Nom correct
+        'schedule': crontab(hour=0, minute=0, day_of_week=0),  # Dimanche minuit
     },
 }
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 
 MIDDLEWARE = [
@@ -113,6 +137,14 @@ EMAIL_PORT = config('EMAIL_PORT', cast=int)
 EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool, default=True)
 EMAIL_USE_SSL = config('EMAIL_USE_SSL', cast=bool, default=False)
 DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL', default='noreply@votresite.com')
+
+
+# Configuration VAPID pour les notifications push
+# Générer les clés VAPID : https://web-push-codelab.glitch.me/
+VAPID_PUBLIC_KEY = "BHx04BscUtU2PAUl2tlxIXDBFLXM6WZ0C7iF_r9BtH5Ykk2WjDX_L4domczOPqKQzMptMNVDuqZhbs6TwGXAoPk"  
+VAPID_PRIVATE_KEY = "Xte1TdFq6owM2Srm6vZjB-l37PIS7RgERKazYi4LJOc"  
+VAPID_ADMIN_EMAIL = "bilelbentaher9@gmail.com"  
+LOGIN_URL = '/signin/'
 
 
 ROOT_URLCONF = 'backend.urls'

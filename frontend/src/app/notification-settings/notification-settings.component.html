@@ -1,0 +1,26 @@
+<div class="notification-settings">
+  <h3>Daily Quote Notifications</h3>
+  <p>Receive an inspiring quote every day!</p>
+  
+  <div class="toggle-container">
+    <label class="switch">
+      <input 
+        type="checkbox" 
+        [checked]="isSubscribed"
+        (change)="toggleNotifications()"
+        [disabled]="isLoading">
+      <span class="slider"></span>
+    </label>
+    <span class="label">
+      {{ isSubscribed ? 'Notifications enabled' : 'Enable notifications' }}
+    </span>
+  </div>
+  
+  <div *ngIf="message" class="message" [ngClass]="messageType">
+    {{ message }}
+  </div>
+  
+  <div *ngIf="isLoading" class="loading">
+    Loading...
+  </div>
+</div>

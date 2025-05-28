@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from scraper.views import QuoteList,QuoteDetail
+from scraper.views import QuoteList,QuoteDetail,SubscribePushView,UnsubscribePushView
 from account.views import SignUpView,UserProfileView,SignInView,SignOutView,ForgotPasswordView,ResetPasswordView
 from rest_framework_simplejwt.views import TokenObtainPairView,  TokenRefreshView
 urlpatterns = [
@@ -38,4 +38,6 @@ urlpatterns = [
     path('api/contact/', include('contact.urls')),
      path('api/newsletter/', include('newsletter.urls')),
      path('api/', include('scraper.urls')),
+     path('api/push/subscribe/', SubscribePushView.as_view(), name='subscribe_push'),
+    path('api/push/unsubscribe/',  UnsubscribePushView.as_view(), name='unsubscribe_push'),
 ]

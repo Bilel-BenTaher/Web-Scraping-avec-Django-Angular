@@ -7,11 +7,10 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'backend.settings')
 # Créer l'instance de l'application Celery
 app = Celery('backend')
 
-# Charger la configuration depuis les settings Django
 app.config_from_object('django.conf:settings', namespace='CELERY')
 
-# Découverte automatique des tâches
-app.autodiscover_tasks()
+# CORRECTION: Spécifier explicitement votre app 'scraper'
+app.autodiscover_tasks(['scraper'])
 
 @app.task(bind=True)
 def debug_task(self):

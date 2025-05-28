@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LayoutsModule } from './layouts/layouts.module';
 import { HttpClientModule } from '@angular/common/http';
+import { NotificationSettingsComponent } from './notification-settings/notification-settings.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    NotificationSettingsComponent,
   ],
   imports: [
     BrowserModule,
