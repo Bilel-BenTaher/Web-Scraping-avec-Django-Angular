@@ -32,6 +32,7 @@ class QuoteList(generics.ListCreateAPIView):
     pagination_class = PageNumberPagination
     serializer_class = QuoteSerializer
     permission_classes = [permissions.IsAuthenticated]
+    
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 

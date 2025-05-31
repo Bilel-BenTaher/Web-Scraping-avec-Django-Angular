@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './views/front/login/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'frontend';
+   constructor(private authService: AuthService) {}
+
+  ngOnInit(): void {
+    // Vérifier l'authentification au démarrage de l'application
+    this.authService.checkAuthentication();
+  }
 }

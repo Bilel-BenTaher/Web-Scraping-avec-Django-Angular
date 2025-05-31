@@ -23,23 +23,6 @@
                 Explore <i class="fas fa-arrow-right ms-2"></i>
             </button>
         </div>
-        
-        <!-- Scraping Button - Modern Integration -->
-        <div class="scraping-section text-center mt-3 pt-3 border-top">
-            <button (click)="triggerScraping()" 
-                    [disabled]="isLoading" 
-                    class="scraping-btn btn btn-outline-primary rounded-pill px-4">
-                <i class="fas fa-sync-alt me-2"></i>
-                {{ isLoading ? 'Scraping in progress...' : 'Update Quotes (Scraping)' }}
-            </button>
-            
-            <div *ngIf="scrapingMessage" class="scraping-message mt-2">
-                <div class="alert alert-info alert-dismissible fade show mb-0" role="alert">
-                    {{ scrapingMessage }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Loading Indicator -->
@@ -54,55 +37,6 @@
         <p class="lead text-muted">No quotes found. Try adjusting your search criteria.</p>
     </div>
 
-    <!-- Modal d'édition -->
-    <div class="modal fade show" tabindex="-1" [ngClass]="{'d-block': isEditing}" style="background-color: rgba(0,0,0,0.5);">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content" *ngIf="editingQuote">
-                <div class="modal-header">
-                    <h5 class="modal-title">Edit Quote</h5>
-                    <button type="button" class="btn-close" (click)="cancelEdit()"></button>
-                </div>
-                <div class="modal-body">
-                    <form>
-                        <div class="mb-3">
-                            <label for="quoteText" class="form-label">Quote Text</label>
-                            <textarea 
-                                id="quoteText" 
-                                class="form-control" 
-                                rows="4" 
-                                [(ngModel)]="editingQuote.text" 
-                                name="quoteText" 
-                                required>
-                            </textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="quoteAuthor" class="form-label">Author</label>
-                            <input 
-                                type="text" 
-                                id="quoteAuthor" 
-                                class="form-control" 
-                                [(ngModel)]="editingQuote.author" 
-                                name="quoteAuthor" 
-                                required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="quoteTags" class="form-label">Tags (comma separated)</label>
-                            <input 
-                                type="text" 
-                                id="quoteTags" 
-                                class="form-control" 
-                                [(ngModel)]="editingQuote.tags" 
-                                name="quoteTags">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
-                    <button type="button" class="btn btn-primary" (click)="saveQuote()">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Quote Grid -->
     <section class="all-quotes-grid row g-4" *ngIf="!isLoading && quotes.length > 0">
@@ -128,14 +62,6 @@
                             </span>
                         </div>
                     </div>
-                </div>
-                <div class="quote-actions mt-auto d-flex justify-content-end gap-2">
-                    <button class="btn btn-outline-primary btn-sm" (click)="editQuote(quote)">
-                        <i class="fas fa-edit"></i> Edit
-                    </button>
-                    <button class="btn btn-outline-danger btn-sm" (click)="deleteQuote(quote)">
-                        <i class="fas fa-trash-alt"></i> Delete
-                    </button>
                 </div>
             </div>
         </div>

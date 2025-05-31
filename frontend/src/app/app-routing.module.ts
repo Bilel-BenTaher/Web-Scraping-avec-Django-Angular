@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { FrontLayoutComponent } from './layouts/front-layout/front-layout.component';
 import { UserLayoutComponent } from './layouts/user-layout/user-layout.component';
+import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 
 const routes: Routes = [
   { 
@@ -19,9 +20,18 @@ const routes: Routes = [
     children: [
       {path: 'home', loadChildren: () => import('./views/user/home/home.module').then(m => m.HomeModule)},
       {path: 'quotes', loadChildren: () => import('./views/user/quotes/quotes.module').then(m => m.QuotesModule)},
-      {path: 'add', loadChildren: () => import('./views/user/add/add.module').then(m => m.AddModule)},
       {path: 'profile', loadChildren: () => import('./views/user/profile/profile.module').then(m => m.ProfileModule)},
       {path: 'logout', loadChildren: () => import('./views/user/logout/logout.module').then(m => m.LogoutModule)},
+    ]
+  },
+  { 
+    path: 'admin', component: AdminLayoutComponent,
+    children: [
+      {path: 'home', loadChildren: () => import('./views/admin/home/home.module').then(m => m.HomeModule)},
+      {path: 'quotes', loadChildren: () => import('./views/admin/quotes/quotes.module').then(m => m.QuotesModule)},
+      {path: 'add', loadChildren: () => import('./views/admin/add/add.module').then(m => m.AddModule)},
+      {path: 'profile', loadChildren: () => import('./views/admin/profile/profile.module').then(m => m.ProfileModule)},
+      {path: 'logout', loadChildren: () => import('./views/admin/logout/logout.module').then(m => m.LogoutModule)},
     ]
   },
 ];

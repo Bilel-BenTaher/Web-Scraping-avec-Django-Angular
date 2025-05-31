@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 from scraper.views import QuoteList,QuoteDetail,SubscribePushView,UnsubscribePushView
-from account.views import SignUpView,UserProfileView,SignInView,SignOutView,ForgotPasswordView,ResetPasswordView
+from account.views import SignUpView,UserProfileView,SignInView,SignOutView,ForgotPasswordView,ResetPasswordView,VerifyTokenView,RefreshTokenView
 from rest_framework_simplejwt.views import TokenObtainPairView,  TokenRefreshView
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,6 +27,8 @@ urlpatterns = [
     path('quotes/delete/<int:pk>/', QuoteDetail.as_view(), name='quotes-delete'),
     path('signup/', SignUpView.as_view()),
     path('signin/', SignInView.as_view(), name='signin'),
+     path('verify-token/', VerifyTokenView.as_view(), name='verify-token'),
+    path('token/refresh/', RefreshTokenView.as_view(), name='token-refresh'),
     path('signout/', SignOutView.as_view(), name='signout'),
     path('profile/', UserProfileView.as_view()),
     path('profile/update/', UserProfileView.as_view()),

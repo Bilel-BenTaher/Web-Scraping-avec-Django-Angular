@@ -22,40 +22,57 @@
       
       <form [formGroup]="quoteForm" (ngSubmit)="onSubmit()" class="quote-form">
         <div class="form-group">
-          <label for="quote-text">Quote</label>
+          <label for="quote-text">Quote <span class="required-asterisk">*</span></label>
           <textarea 
-            id="quote-text" 
+            id="quote-text"
             formControlName="text"
-            class="form-input" 
-            rows="3" 
-            placeholder="Write your quote here..."></textarea>
+            class="form-input"
+            [class.error]="(text?.invalid && (text?.dirty || text?.touched)) || hasFieldError('text')"
+            rows="3"
+            placeholder="Write your quote here..."
+            required></textarea>
+          
+          <!-- Erreurs de validation frontend -->
           <div *ngIf="text?.invalid && (text?.dirty || text?.touched)" class="error-message">
             <span *ngIf="text?.errors?.['required']">Quote text is required.</span>
             <span *ngIf="text?.errors?.['minlength']">Quote must be at least 5 characters long.</span>
+          </div>
+          
+          <!-- Erreurs de validation backend (doublons) -->
+          <div *ngIf="hasFieldError('text')" class="error-message">
           </div>
         </div>
         
         <div class="form-group">
           <label for="quote-author">Author</label>
           <input 
-            type="text" 
-            id="quote-author" 
+            type="text"
+            id="quote-author"
             formControlName="author"
-            class="form-input" 
+            class="form-input"
+            [class.error]="hasFieldError('author')"
             placeholder="Author's name">
-          <div *ngIf="author?.invalid && (author?.dirty || author?.touched)" class="error-message">
-            <span *ngIf="author?.errors?.['required']">Author name is required.</span>
+          
+          <!-- Erreurs de validation backend pour l'auteur -->
+          <div *ngIf="hasFieldError('author')" class="error-message">
+            <span>{{ getFieldError('author') }}</span>
           </div>
         </div>
         
         <div class="form-group">
           <label for="quote-category">Tags</label>
           <input 
-            type="text" 
-            id="quote-category" 
+            type="text"
+            id="quote-category"
             formControlName="tags"
-            class="form-input" 
-            placeholder="Add category">
+            class="form-input"
+            [class.error]="hasFieldError('tags')"
+            placeholder="Add tags">
+          
+          <!-- Erreurs de validation backend pour les tags -->
+          <div *ngIf="hasFieldError('tags')" class="error-message">
+            <span>{{ getFieldError('tags') }}</span>
+          </div>
         </div>
         
         <div class="form-actions">
@@ -63,12 +80,13 @@
             <i class="fas fa-times"></i> Cancel
           </button>
           <button 
-            type="submit" 
-            [disabled]="quoteForm.invalid || isSubmitting" 
+            type="submit"
+            [disabled]="!quoteForm.valid || isSubmitting"
             class="btn btn-success">
             <i class="fas fa-plus"></i> {{ isSubmitting ? 'Adding...' : 'Add Quote' }}
           </button>
         </div>
       </form>
     </section>
-  
+  </main>
+</div>

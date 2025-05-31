@@ -1,0 +1,194 @@
+<main class="main-content container my-5">
+    <header class="content-header text-center mb-5">
+        <div class="header-content">
+            <h1 class="page-title display-4 fw-bold">Daily Inspiration</h1>
+            <p class="page-subtitle lead text-muted">Pearls of wisdom to brighten your day</p>
+            <div class="animated-border mx-auto my-3"></div>
+        </div>
+    </header>
+
+    <!-- Search and Filters -->
+    <div class="search-filter-container bg-white rounded-4 shadow p-4 mb-5">
+        <div class="search-box d-flex flex-column flex-md-row align-items-stretch mb-3 gap-3">
+            <div class="position-relative flex-grow-1">
+                <i class="fas fa-search search-icon position-absolute top-50 translate-middle-y ps-3 text-secondary"></i>
+                <input type="text"
+                       [(ngModel)]="searchQuery"
+                       (keyup.enter)="onSearch()"
+                       [placeholder]="searchPlaceholder"
+                       class="form-control ps-5 search-input rounded-pill border-2">
+            </div>
+            <button class="search-btn btn btn-gradient rounded-pill d-flex align-items-center justify-content-center px-4"
+                    (click)="onSearch()">
+                Explore <i class="fas fa-arrow-right ms-2"></i>
+            </button>
+        </div>
+        
+        <!-- Scraping Button - Modern Integration -->
+        <div class="scraping-section text-center mt-3 pt-3 border-top">
+            <button (click)="triggerScraping()" 
+                    [disabled]="isLoading" 
+                    class="scraping-btn btn btn-outline-primary rounded-pill px-4">
+                <i class="fas fa-sync-alt me-2"></i>
+                {{ isLoading ? 'Scraping in progress...' : 'Update Quotes (Scraping)' }}
+            </button>
+            
+            <div *ngIf="scrapingMessage" class="scraping-message mt-2">
+                <div class="alert alert-info alert-dismissible fade show mb-0" role="alert">
+                    {{ scrapingMessage }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div *ngIf="isLoading" class="text-center my-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- No Results Message -->
+    <div *ngIf="!isLoading && quotes.length === 0" class="text-center my-5">
+        <p class="lead text-muted">No quotes found. Try adjusting your search criteria.</p>
+    </div>
+
+    <!-- Modal d'édition -->
+<div class="modal fade show" tabindex="-1" [ngClass]="{'d-block': isEditing}" style="background-color: rgba(0,0,0,0.5);">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" *ngIf="editingQuote">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Quote</h5>
+                <button type="button" class="btn-close" (click)="cancelEdit()"></button>
+            </div>
+            <div class="modal-body">
+                <form #quoteForm="ngForm">
+                    <div class="mb-3">
+                        <label for="quoteText" class="form-label">
+                            Quote Text <span class="text-danger">*</span>
+                        </label>
+                        <textarea 
+                            id="quoteText" 
+                            class="form-control" 
+                            rows="4" 
+                            [(ngModel)]="editingQuote.text" 
+                            name="quoteText" 
+                            required
+                            #quoteTextInput="ngModel"
+                            [class.is-invalid]="quoteTextInput.invalid && (quoteTextInput.touched || quoteForm.submitted)">
+                        </textarea>
+                        <div class="invalid-feedback" *ngIf="quoteTextInput.invalid && (quoteTextInput.touched || quoteForm.submitted)">
+                            Quote text is required.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="quoteAuthor" class="form-label">
+                            Author 
+                        </label>
+                        <input 
+                            type="text" 
+                            id="quoteAuthor" 
+                            class="form-control" 
+                            [(ngModel)]="editingQuote.author" 
+                            name="quoteAuthor"
+                            placeholder="Enter author name (optional)">
+                    </div>
+                    <div class="mb-3">
+                        <label for="quoteTags" class="form-label">
+                            Tags <span class="text-muted">( comma separated)</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="quoteTags" 
+                            class="form-control" 
+                            [(ngModel)]="editingQuote.tags" 
+                            name="quoteTags"
+                            placeholder="Enter tags separated by commas (optional)">
+                        <div class="form-text">
+                            Example: motivation, success, life
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+                <button type="button" 
+                        class="btn btn-primary" 
+                        (click)="saveQuote()"
+                        [disabled]="!editingQuote.text || editingQuote.text.trim() === ''">
+                    Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Quote Grid -->
+    <section class="all-quotes-grid row g-4" *ngIf="!isLoading && quotes.length > 0">
+        <div class="col-md-6 col-lg-4" *ngFor="let quote of quotes">
+            <div class="quote-card p-4 rounded-4 bg-white shadow-sm position-relative h-100 d-flex flex-column">
+                <div class="quote-content flex-grow-1">
+                    <div class="quote-icon text-primary fs-4 mb-3"><i class="fas fa-quote-left"></i></div>
+                    <p class="quote-text fw-medium fst-italic">{{quote.text}}</p>
+                    <div class="quote-meta mt-3">
+                        <div class="mb-2" *ngIf="quote.author">
+                            <span class="quote-author badge bg-light text-primary">{{quote.author}}</span>
+                        </div>
+                        <!-- Affichage de la catégorie si elle existe -->
+                        <div class="mb-2" *ngIf="quote.category">
+                            <span class="quote-category badge bg-light text-success">{{quote.category}}</span>
+                        </div>
+                        <!-- Affichage des tags -->
+                        <div class="quote-tags" *ngIf="quote.tags">
+                            <span class="quote-tag badge bg-light text-secondary me-1 mb-1 cursor-pointer" 
+                                  *ngFor="let tag of getTagsArray(quote.tags)"
+                                  (click)="filterByTag(tag)">
+                                {{tag}}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="quote-actions mt-auto d-flex justify-content-end gap-2">
+                    <button class="btn btn-outline-primary btn-sm" (click)="editQuote(quote)">
+                        <i class="fas fa-edit"></i> Edit
+                    </button>
+                    <button class="btn btn-outline-danger btn-sm" (click)="deleteQuote(quote)">
+                        <i class="fas fa-trash-alt"></i> Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pagination -->
+    <div class="pagination-container d-flex justify-content-center mt-5 gap-2 flex-wrap" *ngIf="totalPages > 0">
+        <!-- Bouton Précédent -->
+        <button class="pagination-btn btn btn-outline-secondary"
+                [disabled]="currentPage === 1"
+                (click)="onPageChange(currentPage - 1)">
+            <i class="fas fa-chevron-left"></i> Previous
+        </button>
+        
+        <!-- Boutons de pages -->
+        <button *ngFor="let page of pages" 
+                class="pagination-btn btn" 
+                [class.btn-primary]="page === currentPage" 
+                [class.btn-outline-secondary]="page !== currentPage"
+                (click)="onPageChange(page)">
+            {{page}}
+        </button>
+        
+        <!-- Bouton Suivant -->
+        <button class="pagination-btn btn btn-outline-secondary"
+                [disabled]="currentPage === totalPages"
+                (click)="onPageChange(currentPage + 1)">
+            Next <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+    
+    <!-- Indicateur de page actuelle -->
+    <div class="text-center text-muted mt-3" *ngIf="totalPages > 0">
+        Page {{currentPage}} of {{totalPages}} ({{totalQuotes}} quotes total)
+    </div>
+</main>

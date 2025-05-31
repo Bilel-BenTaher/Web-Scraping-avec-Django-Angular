@@ -99,7 +99,7 @@ CELERY_BEAT_SCHEDULE = {
     # Notifications multiples dans la journée - CORRIGÉ
     'send-multiple-quotes': {
         'task': 'scraper.tasks.envoyer_citations_quotidiennes',  # ✅ Nom correct
-        'schedule': crontab(hour='8,12,18', minute=0),  # 8h30, 12h30, 18h30
+        'schedule': crontab(hour='8,12,18', minute=00),  # 8h30, 12h30, 18h30
     },
     
     # Scraping quotidien - CORRIGÉ

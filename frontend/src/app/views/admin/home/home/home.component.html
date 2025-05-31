@@ -1,0 +1,82 @@
+<div class="dashboard-container">
+  
+  <!-- Main Content -->
+  <main class="main-content">
+    <header class="content-header">
+      <div class="header-content" >
+        <h1 class="page-title">Hello, </h1>
+        <p class="page-subtitle">"Knowledge speaks, but wisdom listens." - Jimi Hendrix</p>
+      </div>
+    </header>
+
+    <!-- All Quotes -->
+    <section class="all-quotes">
+      <div class="section-header">
+        <h2 class="section-title">All Quotes</h2>
+        <a routerLink="/admin/quotes" class="view-all">View All →</a>
+      </div>
+
+      <div class="quotes-grid">
+        <!-- Quote 1 -->
+        <div class="quote-card">
+            <div class="quote-content">
+              <p class="quote-text">“كل شيء جميل إذا تمناه الإنسان بصدق.&#8207;“</p>
+              <p class="quote-author"> نزار قباني</p>
+            </div>
+            <div class="quote-footer">
+              <span class="quote-category">حب, جمال, صدق, شعر</span>
+            </div>
+          </div>
+
+        <!-- Quote 2 -->
+        <div class="quote-card">
+            <div class="quote-content">
+              <p class="quote-text">“الإنسان هو وحده الذي يخلق معجزته.&#8207;”</p>
+              <p class="quote-author">نجيب محفوظ</p>
+            </div>
+            <div class="quote-footer">
+              <span class="quote-category">إلهام, إنسانية, معجزة, حكمة</span>
+            </div>
+          </div>
+
+        <!-- Quote 3 -->
+        <div class="quote-card">
+            <div class="quote-content">
+              <p class="quote-text">“.العقل زينة والجهل عار”</p>
+              <p class="quote-author">ابن رشد</p>
+            </div>
+            <div class="quote-footer">
+              <span class="quote-category">علم, حكمة, ثقافة, اقتباس</span>
+            </div>
+          </div>
+      </div>
+    </section>
+
+    <!-- My Quotes and Settings -->
+    <section class="additional-sections">
+
+      <div class="settings-section">
+        <div class="section-header">
+          <h2 class="section-title">Settings</h2>
+        </div>
+
+        <div class="settings-card">
+          <div class="settings-option">
+            
+            <i class="fas fa-user-cog" routerLink="/user/profile"></i>
+            <span routerLink="/user/profile">Edit Profile</span>
+            
+          </div>
+          <div class="settings-option">
+            <i class="fas fa-trash-alt" routerLink="/user/profile"></i>
+            <span routerLink="/user/profile">Delete Account</span>
+          </div>
+          <div class="settings-option">
+            <i class="fas fa-sign-out-alt" href="javascript:void(0)" (click)="onLogout()"></i>
+            <span href="javascript:void(0)" (click)="onLogout()">Logout</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>

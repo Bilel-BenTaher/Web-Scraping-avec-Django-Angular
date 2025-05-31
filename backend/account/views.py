@@ -13,6 +13,11 @@ from rest_framework import status
 from datetime import datetime, timedelta
 from django.utils import timezone
 from .serializers import SignUpSerializer,UserProfileSerializer,SignInSerializer
+from rest_framework_simplejwt.exceptions import  TokenError
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+import jwt
+from django.conf import settings
 
 User = get_user_model()
 
@@ -74,11 +79,9 @@ class SignInView(generics.GenericAPIView):
         email = serializer.validated_data['email']
         password = serializer.validated_data['password']
         
-        # Recherche directe de l'utilisateur par email
         try:
             user = User.objects.get(email=email)
             
-            # Vérification manuelle du mot de passe
             if not user.check_password(password):
                 return Response(
                     {'error': 'Email ou mot de passe incorrect'},
@@ -103,6 +106,92 @@ class SignInView(generics.GenericAPIView):
         except User.DoesNotExist:
             return Response(
                 {'error': 'Email ou mot de passe incorrect'},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
+@method_decorator(csrf_exempt, name='dispatch')
+class VerifyTokenView(generics.GenericAPIView):
+    """Vue pour vérifier la validité d'un token"""
+    permission_classes = [permissions.AllowAny]
+    
+    def post(self, request):
+        token = request.data.get('token')
+        
+        if not token:
+            return Response(
+                {'error': 'Token requis'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        try:
+            # Décoder le token pour vérifier sa validité
+            decoded_token = jwt.decode(
+                token, 
+                settings.SECRET_KEY, 
+                algorithms=['HS256']
+            )
+            
+            # Vérifier si l'utilisateur existe toujours
+            user_id = decoded_token.get('user_id')
+            if not user_id:
+                return Response(
+                    {'error': 'Token invalide'},
+                    status=status.HTTP_401_UNAUTHORIZED
+                )
+            
+            try:
+                user = User.objects.get(id=user_id)
+                return Response({
+                    'valid': True,
+                    'user': {
+                        'id': user.id,
+                        'email': user.email,
+                        'username': user.username
+                    }
+                }, status=status.HTTP_200_OK)
+                
+            except User.DoesNotExist:
+                return Response(
+                    {'error': 'Utilisateur non trouvé'},
+                    status=status.HTTP_401_UNAUTHORIZED
+                )
+                
+        except jwt.ExpiredSignatureError:
+            return Response(
+                {'error': 'Token expiré'},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+        except jwt.InvalidTokenError:
+            return Response(
+                {'error': 'Token invalide'},
+                status=status.HTTP_401_UNAUTHORIZED
+            )
+
+class RefreshTokenView(generics.GenericAPIView):
+    """Vue pour rafraîchir le token d'accès"""
+    permission_classes = [permissions.AllowAny]
+    
+    def post(self, request):
+        refresh_token = request.data.get('refresh')
+        
+        if not refresh_token:
+            return Response(
+                {'error': 'Refresh token requis'},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        
+        try:
+            refresh = RefreshToken(refresh_token)
+            new_access_token = refresh.access_token
+            
+            return Response({
+                'access': str(new_access_token),
+                'refresh': str(refresh)  # Optionnel: nouveau refresh token
+            }, status=status.HTTP_200_OK)
+            
+        except TokenError:
+            return Response(
+                {'error': 'Refresh token invalide ou expiré'},
                 status=status.HTTP_401_UNAUTHORIZED
             )
         

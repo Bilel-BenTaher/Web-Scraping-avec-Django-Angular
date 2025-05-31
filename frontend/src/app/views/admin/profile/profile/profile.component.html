@@ -1,0 +1,137 @@
+<div class="profile-container">
+  <main class="main-content">
+    <header class="content-header">
+      <h1 class="page-title">My Profile</h1>
+      <p class="page-subtitle">Manage your personal information</p>
+    </header>
+
+    <section class="profile-section">
+      <div class="profile-card">
+        <div class="profile-body">
+          <!-- Edit Mode -->
+          <form class="profile-form" *ngIf="isEditing; else viewMode" (ngSubmit)="saveProfile()">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="username">Username</label>
+                <div class="input-group">
+                  <i class="fas fa-user input-icon"></i>
+                  <input type="text" id="username" class="form-input" 
+                         [value]="profile.username" disabled
+                         placeholder="Your username">
+                </div>
+                <small>The username cannot be changed</small>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="first_name">First Name</label>
+                <div class="input-group">
+                  <i class="fas fa-user input-icon"></i>
+                  <input type="text" id="first_name" class="form-input" 
+                         [(ngModel)]="profile.first_name" name="first_name" 
+                         placeholder="Your first name">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="last_name">Last Name</label>
+                <div class="input-group">
+                  <i class="fas fa-user input-icon"></i>
+                  <input type="text" id="last_name" class="form-input" 
+                         [(ngModel)]="profile.last_name" name="last_name" 
+                         placeholder="Your last name">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <div class="input-group">
+                  <i class="fas fa-envelope input-icon"></i>
+                  <input type="email" id="email" class="form-input" 
+                         [(ngModel)]="profile.email" name="email" 
+                         placeholder="Your email">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="password">New Password</label>
+                <div class="input-group">
+                  <i class="fas fa-lock input-icon"></i>
+                  <input type="password" id="password" class="form-input" 
+                         [(ngModel)]="profile.password" name="password" 
+                         placeholder="Leave empty to keep current">
+                </div>
+                <small>Leave empty if you don't want to change your password</small>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn-secondary" (click)="isEditing = false">
+                Cancel
+              </button>
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Save Changes
+              </button>
+            </div>
+          </form>
+
+          <!-- View Mode -->
+          <ng-template #viewMode>
+            <div class="profile-view">
+              <div class="profile-info">
+                <p><strong>Username:</strong> {{profile.username || 'Not set'}}</p>
+                <p><strong>First Name:</strong> {{profile.first_name || 'Not set'}}</p>
+                <p><strong>Last Name:</strong> {{profile.last_name || 'Not set'}}</p>
+                <p><strong>Email:</strong> {{profile.email || 'Not set'}}</p>
+              </div>
+              <button class="btn btn-primary" (click)="isEditing = true">
+                <i class="fas fa-edit"></i> Edit Profile
+              </button>
+            </div>
+          </ng-template>
+        </div>
+
+        <div class="profile-footer">
+          <button class="btn-delete-account" (click)="openDeleteModal($event)">
+            <i class="fas fa-trash-alt"></i> Delete My Account
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Delete Modal -->
+    <div class="modal" id="delete-account-modal" [class.show]="showDeleteModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Delete Your Account</h3>
+          <button class="modal-close" (click)="closeDeleteModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="warning-box">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>This action is irreversible. All your data will be permanently deleted.</p>
+          </div>
+          <div class="form-group">
+            <label for="confirm-delete">Type "DELETE" to confirm</label>
+            <input type="text" id="confirm-delete" class="form-input" 
+                   [(ngModel)]="deleteConfirm">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="closeDeleteModal()">Cancel</button>
+          <button class="btn btn-danger" (click)="confirmDelete()" 
+                  [disabled]="deleteConfirm !== 'DELETE'">
+            <i class="fas fa-trash-alt"></i> Permanently Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>

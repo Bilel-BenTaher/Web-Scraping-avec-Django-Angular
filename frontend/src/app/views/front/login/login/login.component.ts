@@ -1,6 +1,8 @@
+// login.component.ts
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from '../login.service';
+import { AuthService } from '../auth.service';
+
 
 @Component({
   selector: 'app-login',
@@ -11,10 +13,11 @@ export class LoginComponent {
   loginForm: FormGroup;
   showPassword = false;
   errorMessage = '';
+  isLoading = false;
 
   constructor(
     private fb: FormBuilder,
-    private loginService: LoginService
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -32,8 +35,20 @@ export class LoginComponent {
       return;
     }
 
-    const { email, password } = this.loginForm.value;
-    this.loginService.login(email, password);
+    this.isLoading = true;
+    this.errorMessage = '';
     
+    const { email, password } = this.loginForm.value;
+    
+    this.authService.login(email, password).subscribe({
+      next: () => {
+        this.isLoading = false;
+        // La redirection est gérée par le service
+      },
+      error: (error) => {
+        this.isLoading = false;
+        this.errorMessage = error.error?.error || 'Email ou mot de passe incorrect';
+      }
+    });
   }
 }

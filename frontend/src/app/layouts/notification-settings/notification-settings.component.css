@@ -1,9 +1,8 @@
 .notification-settings {
   padding: 20px;
-  border: 1px solid #ddd;
   border-radius: 8px;
   margin: 20px 0;
-  background-color: #f9f9f9;
+  background-color: #212529;
 }
 
 .toggle-container {
@@ -16,8 +15,8 @@
 .switch {
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  width: 40px; /* Réduit de 60px */
+  height: 22px; /* Réduit de 34px */
 }
 
 .switch input {
@@ -35,16 +34,16 @@
   bottom: 0;
   background-color: #ccc;
   transition: .4s;
-  border-radius: 34px;
+  border-radius: 22px; /* Ajusté pour correspondre à la nouvelle hauteur */
 }
 
 .slider:before {
   position: absolute;
   content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
+  height: 18px; /* Réduit de 26px */
+  width: 18px; /* Réduit de 26px */
+  left: 2px; /* Ajusté pour la nouvelle taille */
+  bottom: 2px; /* Ajusté pour la nouvelle taille */
   background-color: white;
   transition: .4s;
   border-radius: 50%;
@@ -55,7 +54,7 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-  transform: translateX(26px);
+  transform: translateX(18px); /* Ajusté pour la nouvelle taille */
 }
 
 .message {
@@ -82,17 +81,8 @@ input:checked + .slider:before {
   margin-top: 10px;
 }
 
-h3 {
-  color: #333;
-  margin-bottom: 10px;
-}
 
-p {
-  color: #666;
-  margin-bottom: 20px;
-}
 
 .label {
-  font-weight: 500;
-  color: #333;
+  color: #ffffff;
 }

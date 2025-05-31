@@ -2,10 +2,17 @@
 <nav class="navbar navbar-expand-lg navbar-dark shadow-sm" [ngClass]="{'navbar-transparent': isTransparent}">
   <div class="container">
     <!-- Brand -->
-    <a class="navbar-brand fw-bold d-flex align-items-center" routerLink="/user/home">
+    <a class="navbar-brand" routerLink="/user/home">
+  <div class="d-flex flex-column align-items-center">
+    <div class="d-flex align-items-center">
       <i class="fas fa-quote-left text-primary me-2"></i>
-      <span>QuotesHub</span>
-    </a>
+      <span class="fw-bold">QuotesHub</span>
+    </div>
+    <div class="text-primary mt-n1" style="font-size: 0.65rem; font-weight: 500; letter-spacing: 2px;">
+      BY <span class="text-white">BBT</span>
+    </div>
+  </div>
+</a>
     
     <!-- Toggle Button -->
     <button class="navbar-toggler border-0" type="button" (click)="toggleMenu()">
@@ -25,12 +32,7 @@
             <i class="fas fa-quote-right me-1"></i>All Quotes
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="add" routerLinkActive="active" ariaCurrentWhenActive="page">
-            <i class="fas fa-plus-circle me-1"></i>Add a Quote
-          </a>
-        </li>
-        
+       
         <!-- User Menu -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle d-flex align-items-center" href="javascript:void(0)" 
@@ -84,15 +86,16 @@
             <span class="nav-text">All Quotes</span>
           </a>
         </li>
-        <li class="nav-item">
-          <a routerLink="add" class="nav-link" routerLinkActive="active" ariaCurrentWhenActive="page">
-            <i class="fas fa-plus-circle nav-icon"></i>
-            <span class="nav-text">Add a Quote</span>
-          </a>
-        </li>
       </ul>
+      
     </nav>
-
+ 
+ <div class="sidebar-footer">
+      <div class="nav-link">
+        <span>Daily Quote Notifications</span>
+      </div>
+    </div>
+     <app-notification-settings></app-notification-settings>
     <div class="sidebar-footer">
       <a routerLink="logout" class="nav-link" (click)="onLogout()">
         <i class="fas fa-sign-out-alt me-2"></i>
@@ -122,7 +125,6 @@
         <ul class="list-unstyled">
           <li><a routerLink="home" class="text-white text-decoration-none">Home</a></li>
           <li><a routerLink="quotes" class="text-white text-decoration-none">Quotes</a></li>
-          <li><a routerLink="add" class="text-white text-decoration-none">Add</a></li>
         </ul>
       </div>
       <div class="col-md-2 mb-4 mb-md-0">

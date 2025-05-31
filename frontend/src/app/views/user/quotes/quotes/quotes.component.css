@@ -301,7 +301,7 @@
    
     transform: translateY(-2px);
 }
-
+.quote-text { direction: rtl; unicode-bidi: embed; text-align: right; }
 @media (max-width: 992px) {
   .sidebar {
     transform: translateX(-100%);

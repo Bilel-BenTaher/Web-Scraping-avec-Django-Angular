@@ -47,17 +47,7 @@ export class QuotesService {
     });
   }
 
-  updateQuote(id: number, quoteData: Partial<Quote>): Observable<Quote> {
-    return this.http.put<Quote>(`${this.apiUrl}update/${id}/`, quoteData, {
-      headers: this.loginService.getAuthorizationHeader() 
-    });
-  }
-
-  deleteQuote(id: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}delete/${id}/`, {
-      headers: this.loginService.getAuthorizationHeader() 
-    });
-  }
+  
 
   // Nouvelle méthode pour gérer les erreurs de token
   private handleTokenError(error: any): void {

@@ -2,8 +2,16 @@
   <div class="container">
     <!-- Brand -->
     <a class="navbar-brand" routerLink="home">
-      <i class="fas fa-quote-left me-2"></i>QuotesHub
-    </a>
+  <div class="d-flex flex-column align-items-center">
+    <div class="d-flex align-items-center">
+      <i class="fas fa-quote-left text-primary me-2"></i>
+      <span class="fw-bold">QuotesHub</span>
+    </div>
+    <div class="text-primary mt-n1" style="font-size: 0.65rem; font-weight: 500; letter-spacing: 2px;">
+      BY <span class="text-white">BBT</span>
+    </div>
+  </div>
+</a>
     
     <!-- Toggle Button -->
     <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" 
@@ -70,7 +78,7 @@
               <h5 class="fw-bold mb-3">Account</h5>
               <ul class="list-unstyled">
                 <li><a routerLink="/login" class="text-white text-decoration-none">Login</a></li>
-                <li><a routerLink="/sign-in" class="text-white text-decoration-none">Register</a></li>
+                <li><a routerLink="/sign-up" class="text-white text-decoration-none">Register</a></li>
               </ul>
             </div>
             <div class="col-md-4">
